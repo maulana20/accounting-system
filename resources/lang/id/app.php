@@ -36,4 +36,7 @@ return [
     'count'                 => 'Jumlah',
     'welcome'               => 'Selamat datang',
     'export-pdf'            => 'Export PDF',
+    'from-date'             => 'Dari Tanggal',
+    'to-date'               => 'Sampai Tanggal',
+    'trans-id'              => 'Trans ID',
 ];
