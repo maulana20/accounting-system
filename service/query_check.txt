@@ -1,0 +1,62 @@
+// QUERY JOURNAL
+
+SELECT d.code, d.name, a.period_begin, c.status, a.created_at, b.desc,
+SUM(CASE WHEN b.position = 1 THEN
+       b.value
+    ELSE
+       0
+    END) AS debet,
+SUM(CASE WHEN b.position = 2 THEN
+       b.value
+    ELSE
+       0
+    END) AS credit
+FROM financial_trans AS a
+LEFT JOIN gl_analysis AS b ON b.financial_trans_id=a.id
+LEFT JOIN period AS c ON c.begin=a.period_begin
+LEFT JOIN coa AS d ON d.id=b.coa_from
+WHERE a.id = 1
+GROUP BY d.code, d.name, a.period_begin, c.status, a.created_at, b.desc, b.position
+ORDER BY debet DESC
+
+// QUERY GENERAL LEDGER
+
+SELECT b.coa_to, b.coa_from, d.name, a.period_begin, a.created_at, b.desc,
+(SELECT balance FROM posting as d WHERE d.coa_id=1 AND d.period_begin='201810') as begining,
+(CASE WHEN b.position = 2 THEN
+       b.value
+    ELSE
+       0
+    END) AS debet,
+(CASE WHEN b.position = 1 THEN
+       b.value
+    ELSE
+       0
+    END) AS credit,
+(SELECT balance FROM posting as d WHERE d.coa_id=1 AND d.period_begin='201810') + (SELECT @ending := @ending+(CASE WHEN b.position = 2 THEN
+       b.value
+    ELSE
+       b.value * -1
+    END) FROM (SELECT @ending := 0) i) As ending
+FROM financial_trans AS a
+LEFT JOIN gl_analysis AS b ON b.financial_trans_id=a.id
+LEFT JOIN period AS c ON c.begin=a.period_begin
+LEFT JOIN coa AS d ON d.id=b.coa_from
+WHERE b.coa_to = 1 AND a.period_begin='201811'
+
+// QUERY TRIAL BALANCE
+
+SELECT a.id, a.name, b.id, b.name, a.parent,
+(SELECT balance FROM posting as e WHERE e.coa_id=b.id AND e.period_begin='201810') + SUM(CASE WHEN c.position = 2 THEN
+       c.value
+    ELSE
+       c.value * -1
+    END) AS balance_201811,
+(SELECT balance FROM posting as e WHERE e.coa_id=b.id AND e.period_begin='201810') as begining_201810
+FROM group_account as a
+LEFT JOIN coa AS b ON b.group_account_id=a.id
+LEFT JOIN gl_analysis AS c ON c.coa_to=b.id
+LEFT JOIN financial_trans AS d ON d.id=c.financial_trans_id
+WHERE d.period_begin='201811'
+GROUP BY a.id, a.name, b.id, b.name, a.parent
+ORDER BY b.id
