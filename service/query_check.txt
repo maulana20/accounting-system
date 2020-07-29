@@ -46,17 +46,19 @@ WHERE b.coa_to = 1 AND a.period_begin='201811'
 
 // QUERY TRIAL BALANCE
 
-SELECT a.id, a.name, b.id, b.name, a.parent,
+SELECT a.id, a.name, b.code, b.name, a.parent,
 (SELECT balance FROM posting as e WHERE e.coa_id=b.id AND e.period_begin='201810') + SUM(CASE WHEN c.position = 2 THEN
        c.value
     ELSE
        c.value * -1
     END) AS balance_201811,
+SUM(CASE WHEN c.position = 2 THEN c.value ELSE 0 END) AS 'debet',
+SUM(CASE WHEN c.position = 1 THEN c.value ELSE 0 END) AS 'credit',
 (SELECT balance FROM posting as e WHERE e.coa_id=b.id AND e.period_begin='201810') as begining_201810
 FROM group_account as a
 LEFT JOIN coa AS b ON b.group_account_id=a.id
 LEFT JOIN gl_analysis AS c ON c.coa_to=b.id
 LEFT JOIN financial_trans AS d ON d.id=c.financial_trans_id
 WHERE d.period_begin='201811'
-GROUP BY a.id, a.name, b.id, b.name, a.parent
+GROUP BY a.id, a.name, b.code, b.name, a.parent
 ORDER BY b.id

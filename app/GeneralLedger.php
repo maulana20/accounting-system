@@ -32,7 +32,7 @@ class GeneralLedger extends Model
             ->join('coa', 'coa.id', '=', 'gl_analysis.coa_to')
             ->where('financial_trans.period_begin', '201811')
             ->groupBy('gl_analysis.coa_to', 'coa.code')
-            ->orderBy('financial_trans.id', 'ASC')
+            ->orderBy('coa.code', 'ASC')
             ->get();
         
         $result = [];

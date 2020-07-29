@@ -3,16 +3,83 @@
 @section('title', trans('accounting.trial-balance'))
 
 @section('content')
-<div class="pull-right">
-    {{ link_to_route('trial-balance.index', 'Input Akun Baru', ['action' => 'create'], ['class' => 'btn btn-success']) }}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ Form::open(['method' => 'get','class' => 'form-inline pull-right']) }}
+        {!! FormField::text('from_date', [
+            'value' => request('date', $from_date),
+            'label' => trans('app.from-date'),
+            'class' => 'input-sm date-select',
+            'placeholder' => 'yyyy-mm-dd',
+        ]) !!}
+        {!! FormField::text('to_date', [
+            'value' => request('date', $to_date),
+            'label' => trans('app.to-date'),
+            'class' => 'input-sm date-select',
+            'placeholder' => 'yyyy-mm-dd',
+        ]) !!}
+        {{ Form::submit(trans('app.search'), ['class' => 'btn btn-sm']) }}
+        {{ link_to_route('trial-balance.index', trans('app.reset')) }}
+        {{ Form::close() }}
+        <h3 class="panel-title" style="padding:6px 0">
+            {{ trans('accounting.trial-balance') }}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>{{ trans('accounting.group-account') }}</th>
+                    <th>{{ trans('accounting.coa-name') }}</th>
+                    <th class="text-right">{{ trans('accounting.begining') }}</th>
+                    <th class="text-right">{{ trans('accounting.debet') }}</th>
+                    <th class="text-right">{{ trans('accounting.credit') }}</th>
+                    <th class="text-right">{{ trans('accounting.ending') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php $id = NULL @endphp
+                @foreach ($trial_balance as $data)
+                <tr>
+                    @if ($id != $data->id)
+                        <td>{{ $data->name }}</td>
+                    @else
+                        <td>&nbsp;</td>
+                    @endif
+                    <td>{{ $data->coa_code }} {{ $data->coa_name }}</td>
+                    <td class="text-right">{{ format_rp($data->begining) }}</td>
+                    <td class="text-right">{{ format_rp($data->debet) }}</td>
+                    <td class="text-right">{{ format_rp($data->credit) }}</td>
+                    @if (isset($data->ending))
+                        <td class="text-right">{{ format_rp($data->ending) }}</td>
+                    @else
+                        <td class="text-right">{{ format_rp($data->begining) }}</td>
+                    @endif
+                </tr>
+                @php $id = $data->id @endphp
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
-<h3 class="page-header">
-    {{ trans('accounting.trial-balance') }}
-</h3>
+@endsection
 
-<div class="row">
-    @foreach ($trial_balance as $data)
-        <pre>{{ $data }}</pre>
-    @endforeach
-</div>
+@section('ext_css')
+{!! Html::style(url('css/plugins/jquery.datetimepicker.css')) !!}
+@endsection
+
+@push('ext_js')
+{!! Html::script(url('js/plugins/jquery.datetimepicker.js')) !!}
+@endpush
+
+@section('script')
+<script>
+(function() {
+    $('.date-select').datetimepicker({
+        timepicker: false,
+        format:'Y-m-d',
+        closeOnDateSelect: true
+    });
+})();
+</script>
 @endsection

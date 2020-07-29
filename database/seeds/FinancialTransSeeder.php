@@ -17,12 +17,12 @@ class FinancialTransSeeder extends Seeder
     public function getFinancialTrans()
     {
         $financialtrans_list = [];
-        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201810', 'type' => 3, 'vou' => 'KAS100000001'];
-        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'KAS100000002'];
-        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'MAN100000003'];
-        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'MAN100000004'];
-        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'KAS100000005'];
-        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'MAY100000006'];
+        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201810', 'type' => 3, 'vou' => 'KAS100000001', 'created_at' => '2018-10-30 05:56:04'];
+        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'KAS100000002', 'created_at' => '2018-11-01 03:00:00'];
+        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'MAN100000003', 'created_at' => '2018-11-01 04:00:00'];
+        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'MAN100000004', 'created_at' => '2018-11-14 20:12:42'];
+        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'KAS100000005', 'created_at' => '2018-11-15 03:57:49'];
+        $financialtrans_list[] = ['user_id' => 1, 'period_begin' => '201811', 'type' => 3, 'vou' => 'MAY100000006', 'created_at' => '2018-11-15 03:57:49'];
         
         return $financialtrans_list;
     }
@@ -77,6 +77,7 @@ class FinancialTransSeeder extends Seeder
                 'period_begin'         => $data['period_begin'],
                 'type'                 => $data['type'],
                 'vou'                  => $data['vou'],
+                'created_at'           => $data['created_at'],
             ]);
         }
         

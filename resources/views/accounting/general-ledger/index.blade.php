@@ -21,7 +21,7 @@
             'placeholder' => 'yyyy-mm-dd',
         ]) !!}
         {{ Form::submit(trans('app.search'), ['class' => 'btn btn-sm']) }}
-        {{ link_to_route('journal.index', trans('app.reset')) }}
+        {{ link_to_route('general-ledger.index', trans('app.reset')) }}
         {{ Form::close() }}
         <h3 class="panel-title" style="padding:6px 0">
             {{ trans('accounting.general-ledger') }}
