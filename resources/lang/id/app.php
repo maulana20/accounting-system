@@ -4,6 +4,7 @@ return [
     // Labels
     'table_no'              => '#',
     'name'                  => 'Nama',
+    'user-name'             => 'Nama Pengguna',
     'submit'                => 'Submit',
     'update'                => 'Update',
     'delete'                => 'Hapus',

@@ -56,6 +56,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('trial-balance', 'Accounting\TrialBalanceController', ['except' => ['create', 'show', 'edit']]);
 
     /*
+     * Finance
+     */
+    Route::resource('general-cash-bank', 'Finance\GeneralCashBankController', ['except' => ['create', 'show', 'edit']]);
+
+
+    /*
      * Units Routes
      */
     Route::resource('units', 'UnitsController', ['except' => ['create', 'show', 'edit']]);

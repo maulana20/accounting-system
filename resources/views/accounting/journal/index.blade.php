@@ -58,6 +58,7 @@
             </tbody>
         </table>
     </div>
+</div>
 @endsection
 
 @section('ext_css')
