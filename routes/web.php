@@ -58,7 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
     /*
      * Finance
      */
-    Route::resource('general-cash-bank', 'Finance\GeneralCashBankController', ['except' => ['create', 'show', 'edit']]);
+    Route::get('general-cash-bank', 'Finance\GeneralCashBankController@index')->name('general-cash-bank.index');
+    Route::get('general-cash-bank/{id}', 'Finance\GeneralCashBankController@show')->name('general-cash-bank.show');
 
 
     /*

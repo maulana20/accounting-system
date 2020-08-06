@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
-@section('title', trans('accounting.journal'))
+@section('title', trans('finance.general-cash-bank'))
 
 @section('content')
 <div class="panel panel-default">
     <div class="panel-heading">
+        {{ Form::open(['method' => 'get','class' => 'form-inline pull-right']) }}
+        {!! FormField::text('q', ['value' => request('q'), 'label' => trans('finance.vou-code'), 'class' => 'input-sm']) !!}
+        {{ Form::submit(__('app.search'), ['class' => 'btn btn-sm']) }}
+        {{ link_to_route('general-ledger.index', trans('app.add')) }}
+        {{ Form::close() }}
         <h3 class="panel-title" style="padding:6px 0">
             {{ trans('finance.general-cash-bank') }}
         </h3>
@@ -28,7 +33,7 @@
                     <td>{{ $data->name }}</td>
                     <td>{{ $data->vou }}</td>
                     <td class="text-center">
-                        {!! link_to_route('general-cash-bank.index', trans('app.edit')) !!} |
+                        {!! link_to_route('general-cash-bank.show', trans('app.edit'), $data->id) !!} |
                         {!! link_to_route('general-cash-bank.index', trans('app.delete')) !!}
                     </td>
                 </tr>

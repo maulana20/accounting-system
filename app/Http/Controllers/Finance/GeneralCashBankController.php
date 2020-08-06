@@ -21,4 +21,11 @@ class GeneralCashBankController extends Controller
         
         return view('finance.general-cash-bank.index', compact('general_cash_bank'));
     }
+    
+    public function show($id)
+    {
+        $general_cash_bank = (new GeneralCashBank())->show($id);
+        
+        return view('finance.general-cash-bank.show', compact('general_cash_bank'));
+    }
 }
