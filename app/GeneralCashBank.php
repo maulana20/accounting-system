@@ -18,12 +18,11 @@ class GeneralCashBank extends Model
     public function show($id)
     {
         $general_cash_bank = GeneralCashBank::select('general_cash_bank.id', 'financial_trans.period_begin', 'general_cash_bank.position', 'general_cash_bank.created_at', 'period.status')
-            ->selectRaw("(SELECT CONCAT_WS('@', MAX(b.id), MAX(b.code), MAX(b.name), MAX(a.desc)) FROM gl_analysis AS a INNER JOIN coa AS b ON b.id=a.coa_from WHERE a.financial_trans_id=financial_trans.id AND a.position=general_cash_bank.position) AS 'coa_from'")
-            ->selectRaw("(SELECT GROUP_CONCAT(CONCAT_WS('@',b.id, b.code, b.name, a.desc) SEPARATOR ';') FROM gl_analysis AS a INNER JOIN coa AS b ON b.id=a.coa_from WHERE a.financial_trans_id=financial_trans.id AND a.position=(CASE WHEN general_cash_bank.position = 1 THEN 2 WHEN general_cash_bank.position = 2 THEN 1 END)) AS 'coa_to'")
+            ->selectRaw("(SELECT CONCAT_WS('@', MAX(b.id), MAX(a.desc)) FROM gl_analysis AS a INNER JOIN coa AS b ON b.id=a.coa_from WHERE a.financial_trans_id=financial_trans.id AND a.position=general_cash_bank.position) AS 'coa'")
             ->join('financial_trans', 'financial_trans.id', '=', 'general_cash_bank.financial_trans_id')
             ->join('period', 'period.begin', '=', 'financial_trans.period_begin')
             ->where('general_cash_bank.id', $id)
-            ->get();
+            ->first();
         
         return $general_cash_bank;
     }

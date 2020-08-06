@@ -18,4 +18,5 @@ return [
     'credit'               => 'Kredit',
     'begining'             => 'Awal',
     'ending'               => 'Akhir',
+    'position'             => 'Posisi',
 ];
