@@ -41,13 +41,10 @@
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ trans('product.product') }} <span class="caret"></span>
+                        {{ trans('finance.finance') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li>{{ link_to_route('products.index', trans('product.list')) }}</li>
-                        <li>{{ link_to_route('units.index', trans('unit.product_unit')) }}</li>
-                        <li role="separator" class="divider"></li>
-                        <li>{{ link_to_route('products.price-list', trans('product.print_price_list')) }}</li>
+                        <li>{{ link_to_route('general-cash-bank.index', trans('finance.general-cash-bank')) }}</li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -55,10 +52,11 @@
                         {{ trans('accounting.accounting') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li>{{ link_to_route('balancesheet-account.index', trans('accounting.balancesheet-account')) }}</li>
                         <li>{{ link_to_route('journal.index', trans('accounting.journal')) }}</li>
                         <li>{{ link_to_route('general-ledger.index', trans('accounting.general-ledger')) }}</li>
                         <li>{{ link_to_route('trial-balance.index', trans('accounting.trial-balance')) }}</li>
+                        <li role="separator" class="divider"></li>
+                        <li>{{ link_to_route('balancesheet-account.index', trans('accounting.balancesheet-account')) }}</li>
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -30,7 +30,7 @@ class GeneralCashBankController extends Controller
         $gl_analysis = GlAnalysis::select('coa.id', 'coa.code', 'coa.name', 'gl_analysis.desc', 'gl_analysis.position', 'gl_analysis.value')
             ->join('coa', 'coa.id', '=', 'gl_analysis.coa_from')
             ->where('financial_trans_id', $general_cash_bank->id)
-            ->where('coa_to', explode('@', $general_cash_bank->coa)[0])
+            ->where('coa_to', $general_cash_bank->coa_id)
             ->get();
         
         return view('finance.general-cash-bank.show', compact('general_cash_bank', 'gl_analysis'));

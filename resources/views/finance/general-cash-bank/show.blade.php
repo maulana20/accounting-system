@@ -4,17 +4,19 @@
 
 @section('content')
 
+@inject('period', 'App\Period')
+@inject('coa', 'App\Coa')
+@inject('general_cash_bank_model', 'App\GeneralCashBank')
 
 <div class="pull-right">
-    @inject('period', 'App\Period')
     {{ $general_cash_bank->period_begin }} {{ $period::$statics['type'][$general_cash_bank->status] }}
 </div>
 <h3 class="page-header">
     {{ trans('finance.general-cash-bank') }}
 </h3>
-
+{!! Form::model($general_cash_bank, ['route' => ['general-cash-bank.show', $general_cash_bank->id],'method' => 'patch']) !!}
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
         {!! FormField::text('created_at', [
             'value' => request('date', date('Y-m-d', strtotime($general_cash_bank->created_at))),
             'label' => trans('app.date'),
@@ -24,10 +26,30 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        {{ $general_cash_bank }}
+    <div class="col-md-3">
+        {!! FormField::radios('position', $general_cash_bank_model::$statics['position'], ['label' => __('accounting.position'), 'required' => false]) !!}
     </div>
 </div>
+<div class="row">
+    <div class="col-md-4">
+       {!! FormField::select('coa_id', $coa::selectRaw("id, CONCAT_WS(' ', code, name) as code_name")->pluck('code_name', 'id'), ['label' => __('accounting.coa-code'), 'required' => false]) !!}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        {!! FormField::text('desc', ['label' => __('accounting.description'), 'required' => true]) !!}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            {!! Form::submit(__('app.edit'), ['class' => 'btn btn-success']) !!}
+            {{ link_to_route('general-cash-bank.index', __('app.cancel'), [], ['class' => 'btn btn-default']) }}
+        </div>
+    </div>
+</div>
+{!! Form::close() !!}
+<hr>
 <div class="panel panel-default table-responsive">
     <table class="table table-condensed">
         <thead>
