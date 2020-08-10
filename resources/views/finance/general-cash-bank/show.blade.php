@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', trans('accounting.journal'))
+@section('title', trans('finance.general-cash-bank'))
 
 @section('content')
 
@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
        {!! FormField::select('coa_id', $coa::selectRaw("id, CONCAT_WS(' ', code, name) as code_name")->pluck('code_name', 'id'), ['label' => __('accounting.coa-code'), 'required' => false]) !!}
     </div>
 </div>

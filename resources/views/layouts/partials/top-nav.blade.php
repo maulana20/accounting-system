@@ -45,6 +45,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>{{ link_to_route('general-cash-bank.index', trans('finance.general-cash-bank')) }}</li>
+                        <li>{{ link_to_route('inter-cash-bank.index', trans('finance.inter-cash-bank')) }}</li>
                     </ul>
                 </li>
                 <li class="dropdown">
