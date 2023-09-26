@@ -19,34 +19,16 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             @if (Auth::check())
             <ul class="nav navbar-nav">
-                <li {{ in_array(Request::segment(1), ['drafts','home']) ? 'class=active' : '' }}>
-                    {{ link_to_route('cart.index', trans('nav_menu.draft_list'), [], ['class' => 'strong text-primary']) }}
-                </li>
-                <li {{ (Request::segment(1) == 'transactions') ? 'class=active' : '' }}>
-                    {{ link_to_route('transactions.index', trans('transaction.list')) }}
-                </li>
-                <li {{ (Request::segment(1) == 'reports') ? 'class=active' : '' }}>
-                    {{ link_to_route('reports.sales.index', trans('report.sales')) }}
+                <li class="active">
+                    {{ link_to_route('home', trans('beranda'), [], ['class' => 'strong text-primary']) }}
                 </li>
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 <li>
-                    <form class="" style="padding-left: 10px;" action="{{ route('cart.add') }}" method="POST">
-                        {{ csrf_field() }}
-                        <input type="submit" class="btn btn-default navbar-btn" name="create-cash-draft" id="cash-draft-create-button" value="{{ trans('transaction.create_cash') }}">
-                        <input type="submit" class="btn btn-default navbar-btn" name="create-credit-draft" id="credit-draft-create-button" value="{{ trans('transaction.create_credit') }}">
-                    </form>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ trans('finance.finance') }} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>{{ link_to_route('general-cash-bank.index', trans('finance.general-cash-bank')) }}</li>
-                        <li>{{ link_to_route('inter-cash-bank.index', trans('finance.inter-cash-bank')) }}</li>
-                    </ul>
+                    <button type="button" class="btn btn-default navbar-btn" onclick="window.open('{{ route('general-cash-bank.index') }}', '_self')">{{ trans('finance.general-cash-bank') }}</button>
+                    <button type="button" class="btn btn-default navbar-btn" onclick="window.open('{{ route('inter-cash-bank.index') }}', '_self')">{{ trans('finance.inter-cash-bank') }}</button>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
