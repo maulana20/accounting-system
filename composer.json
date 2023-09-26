@@ -11,6 +11,7 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "^8.0",
         "laravel/helpers": "^1.1",
+        "laravel/ui": "^3.4",
         "league/flysystem": "^1.0",
         "luthfi/formfield": "^1.0"
     },
