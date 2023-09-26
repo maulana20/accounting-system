@@ -15,7 +15,7 @@ class BalanceSheetController extends Controller
     public function index(Request $request)
     {
         $activa = GroupAccount::where('type', 1)
-                    ->selectRaw('*, (SELECT GROUP_CONCAT(CONCAT(coa.id, "@", coa.code, "@", coa.name)) FROM coa WHERE coa.group_account_id=group_account.id AND coa.lod = 5) AS coa_list')
+                    ->selectRaw('*, (SELECT GROUP_CONCAT(CONCAT(coas.id, "@", coas.code, "@", coas.name)) FROM coas WHERE coas.group_account_id=group_accounts.id AND coas.lod = 5) AS coa_list')
                     ->orderBy('id', 'ASC')
                     ->get();
         

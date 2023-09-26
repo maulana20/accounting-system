@@ -13,14 +13,14 @@ class CreateCoaPostingTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_account', function (Blueprint $table) {
+        Schema::create('group_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
             $table->integer('type');
             $table->integer('parent')->nullable();
             $table->timestamps();
         });
-        Schema::create('coa', function (Blueprint $table) {
+        Schema::create('coas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('group_account_id');
             $table->integer('user_id');
@@ -32,12 +32,12 @@ class CreateCoaPostingTable extends Migration
             $table->string('vou', 6)->nullable()->unique();
             $table->timestamps();
         });
-        Schema::create('period', function (Blueprint $table) {
+        Schema::create('periods', function (Blueprint $table) {
             $table->string('begin', 6)->unique();
             $table->integer('status');
             $table->timestamps();
         });
-        Schema::create('posting', function (Blueprint $table) {
+        Schema::create('postings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('coa_id');
             $table->string('period_begin', 6);
@@ -53,9 +53,9 @@ class CreateCoaPostingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_account');
-        Schema::dropIfExists('coa');
-        Schema::dropIfExists('period');
-        Schema::dropIfExists('posting');
+        Schema::dropIfExists('group_accounts');
+        Schema::dropIfExists('coas');
+        Schema::dropIfExists('periods');
+        Schema::dropIfExists('postings');
     }
 }

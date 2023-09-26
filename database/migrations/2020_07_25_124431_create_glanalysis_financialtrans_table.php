@@ -21,7 +21,7 @@ class CreateGlanalysisFinancialtransTable extends Migration
             $table->string('vou', 15);
             $table->timestamps();
         });
-        Schema::create('gl_analysis', function (Blueprint $table) {
+        Schema::create('gl_analyses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('financial_trans_id');
             $table->integer('coa_to');
@@ -31,13 +31,13 @@ class CreateGlanalysisFinancialtransTable extends Migration
             $table->float('value', 10, 2);
             $table->timestamps();
         });
-        Schema::create('general_cash_bank', function (Blueprint $table) {
+        Schema::create('general_cash_banks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('financial_trans_id');
             $table->integer('position');
             $table->timestamps();
         });
-        Schema::create('inter_cash_bank', function (Blueprint $table) {
+        Schema::create('inter_cash_banks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('financial_trans_out');
             $table->integer('financial_trans_in');
@@ -53,8 +53,8 @@ class CreateGlanalysisFinancialtransTable extends Migration
     public function down()
     {
         Schema::dropIfExists('financial_trans');
-        Schema::dropIfExists('gl_analysis');
-        Schema::dropIfExists('general_cash_bank');
-        Schema::dropIfExists('inter_cash_bank');
+        Schema::dropIfExists('gl_analyses');
+        Schema::dropIfExists('general_cash_banks');
+        Schema::dropIfExists('inter_cash_banks');
     }
 }

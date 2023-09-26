@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Period extends Model
 {
-    protected $table = 'period';
-    
     public static $statics = [
         'type' => [
             '1' => 'Open',
