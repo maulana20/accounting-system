@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
+namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\FinancialTrans;
 use App\GlAnalysis;
 use App\GeneralCashBank;
