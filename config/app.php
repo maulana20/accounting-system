@@ -168,7 +168,6 @@ return [
         /*
          * Package Service Providers...
          */
-        BackupManager\Laravel\Laravel55ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Luthfi\FormField\FormFieldServiceProvider::class,
