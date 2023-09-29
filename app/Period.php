@@ -13,4 +13,14 @@ class Period extends Model
             '3' => 'Closing',
         ]
     ];
+
+    public function financialTrans()
+    {
+        return $this->hasMany(FinancialTrans::class);
+    }
+
+    public function getStatusAttribute($value)
+    {
+        return $this::$statics['type'][$value];
+    }
 }

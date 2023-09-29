@@ -29,4 +29,14 @@ class Coa extends Model
             '5' => '5',
         ]
     ];
+
+    public function groupAccount()
+    {
+        return $this->belongsTo(groupAccounts::class);
+    }
+
+    public function posting()
+    {
+        return $this->belongsTo(Coa::class);
+    }
 }

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
 use App\InterCashBank;
 use App\GlAnalysis;
 
@@ -13,14 +11,14 @@ class InterCashBankController extends Controller
 {
     public function index(Request $request)
     {
-        $inter_cash_bank = (new InterCashBank())->show();
+        $interCashBanks = InterCashBank::orderByTrans()->get();
         
-        return view('finance.inter-cash-bank.index', compact('inter_cash_bank'));
+        return view('finance.inter-cash-bank.index', compact('interCashBanks'));
     }
     
-    public function show($id)
+    public function show(InterCashBank $interCashBank)
     {
-        $inter_cash_bank = (new InterCashBank())->show($id);
+        $inter_cash_bank = (new InterCashBank())->show($interCashBank->id);
         
         $gl_analysis = GlAnalysis::select('coas.id', 'coas.code', 'coas.name', 'gl_analyses.desc', 'gl_analyses.position', 'gl_analyses.value', 'financial_trans.vou')
             ->join('coas', 'coas.id', '=', 'gl_analyses.coa_from')

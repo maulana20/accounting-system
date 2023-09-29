@@ -12,4 +12,29 @@ class GlAnalysis extends Model
             '2' => 'Credit',
         ]
     ];
+
+    public function financialTrans()
+    {
+        return $this->hasMany(FinancialTrans::class);
+    }
+
+    public function coaFrom()
+    {
+        return $this->belongsTo(Coa::class, 'coa_from', 'id');
+    }
+
+    public function coaTo()
+    {
+        return $this->belongsTo(Coa::class, 'coa_to', 'id');
+    }
+
+    public function scopePosition($query, $position)
+    {
+        return $query->where('position', $position);
+    }
+
+    public function getPositionAttribute($value)
+    {
+        return $this::$statics['position'][$value];
+    }
 }

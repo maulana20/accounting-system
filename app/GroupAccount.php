@@ -12,4 +12,9 @@ class GroupAccount extends Model
             '2' => 'Passiva',
         ]
     ];
+
+    public function coas(): BelongsTo
+    {
+        return $this->hasMany(Coa::class);
+    }
 }

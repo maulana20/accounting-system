@@ -38,10 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
      * Finance
      */
     Route::get('general-cash-bank', 'Finance\GeneralCashBankController@index')->name('general-cash-bank.index');
-    Route::get('general-cash-bank/{id}', 'Finance\GeneralCashBankController@show')->name('general-cash-bank.show');
+    Route::get('general-cash-bank/{generalCashBank}', 'Finance\GeneralCashBankController@show')->name('general-cash-bank.show');
     
     Route::get('inter-cash-bank', 'Finance\InterCashBankController@index')->name('inter-cash-bank.index');
-    Route::get('inter-cash-bank/{id}', 'Finance\InterCashBankController@show')->name('inter-cash-bank.show');
+    Route::get('inter-cash-bank/{interCashBank}', 'Finance\InterCashBankController@show')->name('inter-cash-bank.show');
 
     /*
      * Users Routes

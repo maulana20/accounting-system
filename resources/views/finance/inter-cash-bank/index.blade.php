@@ -29,15 +29,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inter_cash_bank as $index => $data)
+                @foreach ($interCashBanks as $index => $data)
                 <tr>
                     <td class="text-center">{{ ($index + 1) }}</td>
-                    <td>{{ $data->created_at }}</td>
-                    <td>{{ $data->name }}</td>
-                    <td>{{ $data->vou_in }}</td>
-                    <td>{{ $data->vou_out }}</td>
-                    <td>{{ $data->desc }}</td>
-                    <td class="text-right">{{ format_rp($data->value) }}</td>
+                    <td>{{ $data->financialTransIn->created_at }}</td>
+                    <td>{{ $data->financialTransIn->user->name }}</td>
+                    <td>{{ $data->financialTransIn->vou }}</td>
+                    <td>{{ $data->financialTransOut->vou }}</td>
+                    <td>{{ $data->financialTransIn->glAnalysis[0]->desc }}</td>
+                    <td class="text-right">{{ format_rp($data->financialTransIn->glAnalysis[0]->value) }}</td>
                     <td class="text-center">
                         {!! link_to_route('inter-cash-bank.show', trans('app.edit'), $data->id) !!} |
                         {!! link_to_route('inter-cash-bank.index', trans('app.delete')) !!}

@@ -72,8 +72,8 @@
                 <td>{{ ($data->vou != $vou) ? $data->vou : '' }}</td>
                 <td>{{ $data->code }} {{ $data->name }}</td>
                 <td>{{ $data->desc }}</td>
-                <td class="text-right">{{ ($data->position == 1) ? format_rp($data->value) : '' }}</td>
-                <td class="text-right">{{ ($data->position == 2) ? format_rp($data->value) : '' }}</td>
+                <td class="text-right">{{ ($data->position == "Debet") ? format_rp($data->value) : '' }}</td>
+                <td class="text-right">{{ ($data->position == "Credit") ? format_rp($data->value) : '' }}</td>
             </tr>
             @php $vou = $data->vou; @endphp
             @endforeach

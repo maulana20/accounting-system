@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class InterCashBank extends Model
 {
+    protected $fillable = [
+        'financial_trans_in',
+        'financial_trans_out',
+    ];
+
     public function show($id = NULL)
     {
         $inter_cash_bank = InterCashBank::select('inter_cash_banks.id', 'users.name', 'inter_cash_banks.financial_trans_in', 'inter_cash_banks.financial_trans_out', 'fintrans_in.vou as vou_in', 'fintrans_out.vou as vou_out', 'fintrans_in.period_begin', 'periods.status', 'fintrans_in.created_at')
@@ -27,5 +32,23 @@ class InterCashBank extends Model
         }
         
         return $inter_cash_bank;
+    }
+
+    public function financialTransIn()
+    {
+        return $this->belongsTo(financialTrans::class, 'financial_trans_in', 'id');
+    }
+
+    public function financialTransOut()
+    {
+        return $this->belongsTo(financialTrans::class, 'financial_trans_out', 'id');
+    }
+
+    public function scopeOrderByTrans($query)
+    {
+        $query->join('financial_trans', 'financial_trans.id', '=', 'inter_cash_banks.financial_trans_in')
+            ->select('inter_cash_banks.*', 'financial_trans.created_at as trans_created_at')
+            ->orderBy('financial_trans.created_at', 'DESC');
+        return $query;
     }
 }

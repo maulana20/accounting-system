@@ -4,21 +4,17 @@
 
 @section('content')
 
-@inject('period', 'App\Period')
-@inject('coa', 'App\Coa')
-@inject('general_cash_bank_model', 'App\GeneralCashBank')
-
 <div class="pull-right">
-    {{ $general_cash_bank->period_begin }} {{ $period::$statics['type'][$general_cash_bank->status] }}
+    {{ $generalCashBank->financialTrans->period_begin }} {{ $generalCashBank->financialTrans->period->status }}
 </div>
 <h3 class="page-header">
     {{ trans('finance.general-cash-bank') }}
 </h3>
-{!! Form::model($general_cash_bank, ['route' => ['general-cash-bank.show', $general_cash_bank->id],'method' => 'patch']) !!}
+{!! Form::model($generalCashBank, ['route' => ['general-cash-bank.show', $generalCashBank->id],'method' => 'patch']) !!}
 <div class="row">
     <div class="col-md-3">
         {!! FormField::text('created_at', [
-            'value' => request('date', date('Y-m-d', strtotime($general_cash_bank->created_at))),
+            'value' => request('date', date('Y-m-d', strtotime($generalCashBank->created_at))),
             'label' => trans('app.date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
@@ -27,12 +23,23 @@
 </div>
 <div class="row">
     <div class="col-md-3">
-        {!! FormField::radios('position', $general_cash_bank_model::$statics['position'], ['label' => __('accounting.position'), 'required' => false]) !!}
+        {!! FormField::radios('position', [
+            '1' => 'Kas Bank Masuk',
+            '2' => 'Kas Bank Keluar',
+        ], ['label' => __('accounting.position'), 'required' => false]) !!}
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
-       {!! FormField::select('coa_id', $coa::selectRaw("id, CONCAT_WS(' ', code, name) as code_name")->pluck('code_name', 'id'), ['label' => __('accounting.coa-code'), 'required' => false]) !!}
+        <div class="form-group ">
+            <label for="position" class="control-label">{{ __('accounting.coa-code') }}</label>
+            <select class="form-control" name='coa_to'>
+                <option>{{ __('accounting.coa-code') }}</option>
+                @foreach ($coas as $value)
+                    <option value="{{ $value->id }}" {{ $coaTo === $value->id ? "selected" : "" }}>{{ $value->code }} {{ $value->name }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -62,15 +69,14 @@
                 <th class="text-center">{!! link_to_route('general-cash-bank.index', trans('app.add')) !!}</th>
             </tr>
         </thead>
-        @foreach ($gl_analysis as $key => $value)
+        @foreach ($glAnalysis as $key => $analysis)
         <tbody>
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $value->code }} {{ $value->name }}</td>
-                <td>{{ $value->desc }}</td>
-                <td class="text-right">{{ format_rp($value->value) }}</td>
-                @inject('gl_analysis', 'App\GlAnalysis')
-                <td>{{ $gl_analysis::$statics['position'][$value->position] }}</td>
+                <td>{{ $analysis->coaTo->code }} {{ $analysis->coaTo->name }}</td>
+                <td>{{ $analysis->desc }}</td>
+                <td class="text-right">{{ format_rp($analysis->value) }}</td>
+                <td>{{ $analysis->position }}</td>
                 <td class="text-center">
                     {!! link_to_route('general-cash-bank.index', trans('app.edit')) !!} |
                     {!! link_to_route('general-cash-bank.index', trans('app.delete')) !!}

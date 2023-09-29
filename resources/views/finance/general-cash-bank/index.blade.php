@@ -26,12 +26,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($general_cash_bank as $index => $data)
+                @foreach ($generalCashBank as $index => $data)
                 <tr>
                     <td class="text-center">{{ ($index + 1) }}</td>
-                    <td>{{ $data->created_at }}</td>
-                    <td>{{ $data->name }}</td>
-                    <td>{{ $data->vou }}</td>
+                    <td>{{ $data->financialTrans->created_at }}</td>
+                    <td>{{ $data->financialTrans->user->name }}</td>
+                    <td>{{ $data->financialTrans->vou }}</td>
                     <td class="text-center">
                         {!! link_to_route('general-cash-bank.show', trans('app.edit'), $data->id) !!} |
                         {!! link_to_route('general-cash-bank.index', trans('app.delete')) !!}
