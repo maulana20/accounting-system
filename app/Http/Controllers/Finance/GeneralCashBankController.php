@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Coa;
 use App\GeneralCashBank;
+use App\Services\GeneralCashBankFormService;
 
 class GeneralCashBankController extends Controller
 {
@@ -16,13 +17,12 @@ class GeneralCashBankController extends Controller
         return view('finance.general-cash-bank.index', compact('generalCashBank'));
     }
     
-    public function show(GeneralCashBank $generalCashBank)
+    public function show(GeneralCashBank $generalCashBank, GeneralCashBankFormService $formService)
     {
-        $position = $generalCashBank->position == 2 ? 1 : 2;
-        $glAnalysis = $generalCashBank->financialTrans->glAnalysis()->position($position)->get();
-        $coaTo = $glAnalysis->first()->coaTo->id;
-        $coas = Coa::get();
+        $form = $formService->form;
+        $listing = $formService->listing;
+        $coas = Coa::pluckCode();
         
-        return view('finance.general-cash-bank.show', compact('generalCashBank', 'glAnalysis', 'coaTo', 'coas'));
+        return view('finance.general-cash-bank.show', compact('form', 'listing', 'coas'));
     }
 }

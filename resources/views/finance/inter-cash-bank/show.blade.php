@@ -4,20 +4,17 @@
 
 @section('content')
 
-@inject('period', 'App\Period')
-@inject('coa', 'App\Coa')
-
 <div class="pull-right">
-    {{ $inter_cash_bank->period_begin }} {{ $period::$statics['type'][$inter_cash_bank->status] }}
+    {{ $form->period }} {{ $form->status }}
 </div>
 <h3 class="page-header">
     {{ trans('finance.inter-cash-bank') }}
 </h3>
-{!! Form::model($inter_cash_bank, ['route' => ['inter-cash-bank.show', $inter_cash_bank->id],'method' => 'patch']) !!}
+{!! Form::model($form, ['route' => ['inter-cash-bank.show', $form->id],'method' => 'patch']) !!}
 <div class="row">
     <div class="col-md-3">
         {!! FormField::text('created_at', [
-            'value' => request('date', date('Y-m-d', strtotime($inter_cash_bank->created_at))),
+            'value' => request('date', date('Y-m-d', strtotime($form->created_at))),
             'label' => trans('app.date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
@@ -26,10 +23,10 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-       {!! FormField::select('coa_from', $coa::selectRaw("id, CONCAT_WS(' ', code, name) as code_name")->pluck('code_name', 'id'), ['label' => trans('accounting.coa-from'), 'required' => false]) !!}
+       {!! FormField::select('coa_from', $coas, ['label' => trans('accounting.coa-from'), 'required' => false]) !!}
     </div>
     <div class="col-md-6">
-       {!! FormField::select('coa_to', $coa::selectRaw("id, CONCAT_WS(' ', code, name) as code_name")->pluck('code_name', 'id'), ['label' => trans('accounting.coa-to'), 'required' => false]) !!}
+       {!! FormField::select('coa_to', $coas, ['label' => trans('accounting.coa-to'), 'required' => false]) !!}
     </div>
 </div>
 <div class="row">
@@ -66,16 +63,16 @@
         </thead>
         <tbody>
 			@php $vou = null; $no = 0; @endphp
-            @foreach ($gl_analysis as $data)
+            @foreach ($listing as $data)
             <tr>
-                <td>{{ ($data->vou != $vou) ? ++$no : '' }}</td>
-                <td>{{ ($data->vou != $vou) ? $data->vou : '' }}</td>
-                <td>{{ $data->code }} {{ $data->name }}</td>
+                <td>{{ ($data->financialTrans->vou != $vou) ? ++$no : '' }}</td>
+                <td>{{ ($data->financialTrans->vou != $vou) ? $data->financialTrans->vou : '' }}</td>
+                <td>{{ $data->coaFrom->code }} {{ $data->coaFrom->name }}</td>
                 <td>{{ $data->desc }}</td>
                 <td class="text-right">{{ ($data->position == "Debet") ? format_rp($data->value) : '' }}</td>
                 <td class="text-right">{{ ($data->position == "Credit") ? format_rp($data->value) : '' }}</td>
             </tr>
-            @php $vou = $data->vou; @endphp
+            @php $vou = $data->financialTrans->vou; @endphp
             @endforeach
         </tbody>
     </table>

@@ -39,4 +39,10 @@ class Coa extends Model
     {
         return $this->belongsTo(Coa::class);
     }
+
+    public function scopePluckCode($query)
+    {
+        $collect = $query->selectRaw("id, CONCAT_WS(' ', code, name) as name")->get();
+        return $collect->pluck('name', 'id');
+    }
 }

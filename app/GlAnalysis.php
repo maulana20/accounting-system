@@ -15,7 +15,7 @@ class GlAnalysis extends Model
 
     public function financialTrans()
     {
-        return $this->hasMany(FinancialTrans::class);
+        return $this->belongsTo(FinancialTrans::class, 'financial_trans_id', 'id');
     }
 
     public function coaFrom()

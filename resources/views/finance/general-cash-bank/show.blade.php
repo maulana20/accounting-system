@@ -5,16 +5,16 @@
 @section('content')
 
 <div class="pull-right">
-    {{ $generalCashBank->financialTrans->period_begin }} {{ $generalCashBank->financialTrans->period->status }}
+    {{ $form->period }} {{ $form->status }}
 </div>
 <h3 class="page-header">
     {{ trans('finance.general-cash-bank') }}
 </h3>
-{!! Form::model($generalCashBank, ['route' => ['general-cash-bank.show', $generalCashBank->id],'method' => 'patch']) !!}
+{!! Form::model($form, ['route' => ['general-cash-bank.show', $form->id],'method' => 'patch']) !!}
 <div class="row">
     <div class="col-md-3">
         {!! FormField::text('created_at', [
-            'value' => request('date', date('Y-m-d', strtotime($generalCashBank->created_at))),
+            'value' => request('date', date('Y-m-d', strtotime($form->created_at))),
             'label' => trans('app.date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
@@ -31,15 +31,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <div class="form-group ">
-            <label for="position" class="control-label">{{ __('accounting.coa-code') }}</label>
-            <select class="form-control" name='coa_to'>
-                <option>{{ __('accounting.coa-code') }}</option>
-                @foreach ($coas as $value)
-                    <option value="{{ $value->id }}" {{ $coaTo === $value->id ? "selected" : "" }}>{{ $value->code }} {{ $value->name }}</option>
-                @endforeach
-            </select>
-        </div>
+    {!! FormField::select('coa_id', $coas, ['label' => __('accounting.coa-code'), 'required' => false]) !!}
     </div>
 </div>
 <div class="row">
@@ -69,14 +61,14 @@
                 <th class="text-center">{!! link_to_route('general-cash-bank.index', trans('app.add')) !!}</th>
             </tr>
         </thead>
-        @foreach ($glAnalysis as $key => $analysis)
+        @foreach ($listing as $key => $data)
         <tbody>
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $analysis->coaTo->code }} {{ $analysis->coaTo->name }}</td>
-                <td>{{ $analysis->desc }}</td>
-                <td class="text-right">{{ format_rp($analysis->value) }}</td>
-                <td>{{ $analysis->position }}</td>
+                <td>{{ $data->coaFrom->code }} {{ $data->coaFrom->name }}</td>
+                <td>{{ $data->desc }}</td>
+                <td class="text-right">{{ format_rp($data->value) }}</td>
+                <td>{{ $data->position }}</td>
                 <td class="text-center">
                     {!! link_to_route('general-cash-bank.index', trans('app.edit')) !!} |
                     {!! link_to_route('general-cash-bank.index', trans('app.delete')) !!}
