@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Accounting;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
-
-use App\GeneralLedger;
+use Illuminate\Http\Request;
+use App\GlAnalysis;
 
 class GeneralLegderController extends Controller
 {
@@ -15,9 +13,8 @@ class GeneralLegderController extends Controller
         $from_date = $request->get('from_date');
         $to_date = $request->get('to_date');
         $coa_id = $request->get('coa_id');
+        $generalLedgers = GlAnalysis::generalLedger()->get();
         
-        $general_ledger = (new GeneralLedger())->search($coa_id, $from_date, $to_date);
-        
-        return view('accounting.general-ledger.index', compact('general_ledger', 'from_date', 'to_date', 'coa_id'));
+        return view('accounting.general-ledger.index', compact('generalLedgers', 'from_date', 'to_date', 'coa_id'));
     }
 }

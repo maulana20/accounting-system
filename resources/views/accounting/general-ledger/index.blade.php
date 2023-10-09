@@ -43,32 +43,43 @@
                 </tr>
             </thead>
             <tbody>
-                @php $id = NULL @endphp
-                @foreach ($general_ledger as $data)
+                @php
+                    $id = NULL;
+                    $coaTo = NULL;
+                    $ending = 0;
+                @endphp
+                @foreach ($generalLedgers as $data)
                 <tr>
-                    @if ($id != $data->coa_to)
+                    @php
+                        if ($coaTo != $data->coa_to) $ending = 0;
+                        $ending += ($coaTo != $data->coa_to ? $data->begining : 0) + ($data->position === 'Credit' ? $data->value : $data->value * -1);
+                    @endphp
+                    @if ($id != $data->financial_trans_id)
                         <td>{{ $data->created_at }}</td>
                     @else
                         <td>&nbsp;</td>
                     @endif
-                    <td>{{ $data->id }}</td>
-                    @if ($id != $data->coa_to)
-                        <td>{{ $data->coa_to }}</td>
+                    <td>{{ $data->financial_trans_id }}</td>
+                    @if ($coaTo != $data->coa_to)
+                        <td>{{ $data->coaTo->code }}</td>
                     @else
                         <td>&nbsp;</td>
                     @endif
-                    <td>{{ $data->code }}</td>
+                    <td>{{ $data->coaFrom->code }}</td>
                     <td>{{ $data->desc }}</td>
-                    @if ($id != $data->coa_to)
+                    @if ($coaTo != $data->coa_to)
                         <td class="text-right">{{ format_rp($data->begining) }}</td>
                     @else
                         <td>&nbsp;</td>
                     @endif
-                    <td class="text-right">{{ format_rp($data->debet) }}</td>
-                    <td class="text-right">{{ format_rp($data->credit) }}</td>
-                    <td class="text-right">{{ format_rp($data->ending) }}</td>
+                    <td class="text-right">{{ $data->position === 'Credit' ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ $data->position === 'Debet' ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ format_rp($ending) }}</td>
                 </tr>
-                @php $id = $data->coa_to @endphp
+                @php
+                    $id = $data->financial_trans_id;
+                    $coaTo = $data->coa_to;
+                @endphp
                 @endforeach
             </tbody>
         </table>
