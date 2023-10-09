@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Accounting;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
-use App\TrialBalance;
+use App\Coa;
 
 class TrialBalanceController extends Controller
 {
@@ -14,9 +12,8 @@ class TrialBalanceController extends Controller
     {
         $from_date = $request->get('from_date');
         $to_date = $request->get('to_date');
+        $trialBalances = Coa::trialBalance()->get();
         
-        $trial_balance = (new TrialBalance())->search($from_date, $to_date);
-        
-        return view('accounting.trial-balance.index', compact('trial_balance', 'from_date', 'to_date'));
+        return view('accounting.trial-balance.index', compact('trialBalances', 'from_date', 'to_date'));
     }
 }

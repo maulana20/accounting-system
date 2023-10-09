@@ -38,25 +38,22 @@
                 </tr>
             </thead>
             <tbody>
-                @php $id = NULL @endphp
-                @foreach ($trial_balance as $data)
+                @php $id = NULL; @endphp
+                @foreach ($trialBalances as $data)
                 <tr>
-                    @if ($id != $data->id)
-                        <td>{{ $data->name }}</td>
+                    @if ($id != $data->groupAccount->id)
+                        <td>{{ $data->groupAccount->name }}</td>
                     @else
                         <td>&nbsp;</td>
                     @endif
-                    <td>{{ $data->coa_code }} {{ $data->coa_name }}</td>
+                    <td>{{ $data->code }} {{ $data->name }}</td>
                     <td class="text-right">{{ format_rp($data->begining) }}</td>
-                    <td class="text-right">{{ format_rp($data->debet) }}</td>
-                    <td class="text-right">{{ format_rp($data->credit) }}</td>
-                    @if (isset($data->ending))
-                        <td class="text-right">{{ format_rp($data->ending) }}</td>
-                    @else
-                        <td class="text-right">{{ format_rp($data->begining) }}</td>
-                    @endif
+                    @php $analysis = $data->glAnalysis->first(); @endphp
+                    <td class="text-right">{{ format_rp($analysis ? $analysis->debet : 0) }}</td>
+                    <td class="text-right">{{ format_rp($analysis ? $analysis->credit : 0) }}</td>
+                    <td class="text-right">{{ format_rp($analysis ? $analysis->ending : $data->begining) }}</td>
                 </tr>
-                @php $id = $data->id @endphp
+                @php $id = $data->groupAccount->id @endphp
                 @endforeach
             </tbody>
         </table>
