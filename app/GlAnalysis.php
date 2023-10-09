@@ -37,4 +37,14 @@ class GlAnalysis extends Model
     {
         return $this::$statics['position'][$value];
     }
+
+    public function scopeJournal($query)
+    {
+        return $query->select('financial_trans_id', 'coa_from', 'position', 'financial_trans.created_at')
+            ->join('financial_trans', 'financial_trans.id', '=', 'gl_analyses.financial_trans_id')
+            ->selectRaw('SUM(value) as value')
+            ->groupBy('financial_trans_id', 'coa_from', 'position', 'financial_trans.created_at')
+            ->orderBy('financial_trans_id', 'ASC')
+            ->orderBy('position', 'ASC');
+    }
 }

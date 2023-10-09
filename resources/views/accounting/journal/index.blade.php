@@ -41,19 +41,19 @@
                 @php $id = NULL @endphp
                 @foreach ($journal as $data)
                 <tr>
-                    @if ($id != $data->id)
-                    <td>{{ $data->created_at }}</td>
-                    <td>{{ $data->id }}</td>
+                    @if ($id != $data->financial_trans_id)
+                        <td>{{ $data->created_at }}</td>
+                        <td>{{ $data->financial_trans_id }}</td>
                     @else
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     @endif
-                    <td>{{ $data->code }}</td>
-                    <td>{{ $data->name }}</td>
-                    <td class="text-right">{{ format_rp($data->debet) }}</td>
-                    <td class="text-right">{{ format_rp($data->credit) }}</td>
+                    <td>{{ $data->coaFrom->code }}</td>
+                    <td>{{ $data->coaFrom->name }}</td>
+                    <td class="text-right">{{ $data->position === 'Debet' ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ $data->position === 'Credit' ? format_rp($data->value) : 0 }}</td>
                 </tr>
-                @php $id = $data->id @endphp
+                @php $id = $data->financial_trans_id @endphp
                 @endforeach
             </tbody>
         </table>
