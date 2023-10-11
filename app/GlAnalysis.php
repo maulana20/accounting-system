@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\JoinClause;
 
 class GlAnalysis extends Model
 {
@@ -50,9 +51,12 @@ class GlAnalysis extends Model
 
     public function scopeGeneralLedger($query)
     {
-        return $query->select('gl_analyses.*')
-            ->selectRaw('(SELECT balance FROM postings WHERE postings.coa_id=coa_to AND postings.period_begin=201810) as begining')
+        return $query->select('gl_analyses.*', 'balance as begining')
             ->join('coas', 'coas.id', '=', 'gl_analyses.coa_to')
+            ->join('postings', function (JoinClause $join) {
+                $join->on('gl_analyses.coa_to', 'postings.coa_id')
+                    ->where('postings.period_begin', '201810');
+            })
             ->whereHas('financialTrans', function ($trans) {
                 $trans->where('period_begin', '201811');
             })
