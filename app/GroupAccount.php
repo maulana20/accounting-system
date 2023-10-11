@@ -13,8 +13,18 @@ class GroupAccount extends Model
         ]
     ];
 
-    public function coas(): BelongsTo
+    public function coas()
     {
         return $this->hasMany(Coa::class);
+    }
+
+    public function scopeActiva($query)
+    {
+        return $query->where('type', 1);
+    }
+
+    public function scopePassiva($query)
+    {
+        return $query->where('type', 2);
     }
 }

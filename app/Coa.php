@@ -20,13 +20,6 @@ class Coa extends Model
             '10' => 'PPn Keluaran',
             '11' => 'Passiva',
             '12' => 'Penjualan',
-        ],
-        'lod' => [
-            '1' => '1',
-            '2' => '2',
-            '3' => '3',
-            '4' => '4',
-            '5' => '5',
         ]
     ];
 
