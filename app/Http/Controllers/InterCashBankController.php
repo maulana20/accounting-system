@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Finance;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\InterCashBank;
 use App\Coa;

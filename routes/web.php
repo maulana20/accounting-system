@@ -29,19 +29,19 @@ Route::group(['middleware' => 'auth'], function () {
     /*
      * Accounting
      */
-    Route::resource('balancesheet-account', 'Accounting\BalanceSheetController', ['except' => ['create', 'show', 'edit']]);
-    Route::resource('journal', 'Accounting\JournalController', ['except' => ['create', 'show', 'edit']]);
-    Route::resource('general-ledger', 'Accounting\GeneralLegderController', ['except' => ['create', 'show', 'edit']]);
-    Route::resource('trial-balance', 'Accounting\TrialBalanceController', ['except' => ['create', 'show', 'edit']]);
+    Route::resource('balancesheet-account', 'BalanceSheetController', ['except' => ['create', 'show', 'edit']]);
+    Route::resource('journal', 'JournalController', ['except' => ['create', 'show', 'edit']]);
+    Route::resource('general-ledger', 'GeneralLegderController', ['except' => ['create', 'show', 'edit']]);
+    Route::resource('trial-balance', 'TrialBalanceController', ['except' => ['create', 'show', 'edit']]);
 
     /*
      * Finance
      */
-    Route::get('general-cash-bank', 'Finance\GeneralCashBankController@index')->name('general-cash-bank.index');
-    Route::get('general-cash-bank/{generalCashBank}', 'Finance\GeneralCashBankController@show')->name('general-cash-bank.show');
+    Route::get('general-cash-bank', 'GeneralCashBankController@index')->name('general-cash-bank.index');
+    Route::get('general-cash-bank/{generalCashBank}', 'GeneralCashBankController@show')->name('general-cash-bank.show');
     
-    Route::get('inter-cash-bank', 'Finance\InterCashBankController@index')->name('inter-cash-bank.index');
-    Route::get('inter-cash-bank/{interCashBank}', 'Finance\InterCashBankController@show')->name('inter-cash-bank.show');
+    Route::get('inter-cash-bank', 'InterCashBankController@index')->name('inter-cash-bank.index');
+    Route::get('inter-cash-bank/{interCashBank}', 'InterCashBankController@show')->name('inter-cash-bank.show');
 
     /*
      * Users Routes
