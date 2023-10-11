@@ -3,16 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\TypeEnum;
 
 class GroupAccount extends Model
 {
-    public static $statics = [
-        'type' => [
-            '1' => 'Aktiva',
-            '2' => 'Passiva',
-        ]
-    ];
-
     public function coas()
     {
         return $this->hasMany(Coa::class);
@@ -20,11 +14,11 @@ class GroupAccount extends Model
 
     public function scopeActiva($query)
     {
-        return $query->where('type', 1);
+        return $query->where('type', TypeEnum::ACTIVA);
     }
 
     public function scopePassiva($query)
     {
-        return $query->where('type', 2);
+        return $query->where('type', TypeEnum::PASSIVA);
     }
 }

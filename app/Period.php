@@ -3,17 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\PeriodEnum;
 
 class Period extends Model
 {
-    public static $statics = [
-        'type' => [
-            '1' => 'Open',
-            '2' => 'Posting',
-            '3' => 'Closing',
-        ]
-    ];
-
     public function financialTrans()
     {
         return $this->hasMany(FinancialTrans::class);
@@ -21,6 +14,6 @@ class Period extends Model
 
     public function getStatusAttribute($value)
     {
-        return $this::$statics['type'][$value];
+        return PeriodEnum::fromValue($value)->description;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\PositionEnum;
+
 class GeneralCashBankFormService
 {
     public $form;
@@ -13,8 +15,9 @@ class GeneralCashBankFormService
             $generalCashBank = request()->route()->parameter('generalCashBank');
         }
 
-        $position = $generalCashBank->position == 2 ? 1 : 2;
-        $this->listing = $generalCashBank->financialTrans->glAnalysis()->position($position)->get();
+        $this->listing = $generalCashBank->financialTrans->glAnalysis()->position(
+            $generalCashBank->position === PositionEnum::DEBET ? PositionEnum::CREDIT : PositionEnum::DEBET
+        )->get();
 
         $this->form = new \StdClass;
         $this->form->id = $generalCashBank->id;

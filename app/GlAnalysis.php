@@ -4,16 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\JoinClause;
+use App\Enums\PositionEnum;
 
 class GlAnalysis extends Model
 {
-    public static $statics = [
-        'position' => [
-            '1' => 'Debet',
-            '2' => 'Credit',
-        ]
-    ];
-
     public function financialTrans()
     {
         return $this->belongsTo(FinancialTrans::class, 'financial_trans_id', 'id');
@@ -36,7 +30,7 @@ class GlAnalysis extends Model
 
     public function getPositionAttribute($value)
     {
-        return $this::$statics['position'][$value];
+        return PositionEnum::fromValue($value)->description;
     }
 
     public function scopeJournal($query)

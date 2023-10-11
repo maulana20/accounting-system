@@ -6,13 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class GeneralCashBank extends Model
 {
-    public static $statics = [
-        'position' => [
-            '1' => 'Kas Bank Masuk',
-            '2' => 'Kas Bank Keluar',
-        ]
-    ];
-
     public function financialTrans()
     {
         return $this->belongsTo(FinancialTrans::class);

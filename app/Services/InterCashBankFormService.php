@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\PositionEnum;
+
 class InterCashBankFormService
 {
     public $form;
@@ -19,9 +21,9 @@ class InterCashBankFormService
         $this->form->status = $interCashBank->financialTransOut->period->status;
         $this->form->created_at = $interCashBank->created_at;
         $this->form->name = $interCashBank->financialTransOut->user->name;
-        $this->form->coa_from = $interCashBank->financialTransOut->glAnalysis()->where('position', 2)->first()->coa_from;
-        $this->form->coa_to = $interCashBank->financialTransIn->glAnalysis()->where('position', 1)->first()->coa_from;
-        $this->form->value = $interCashBank->financialTransOut->glAnalysis()->where('position', 2)->first()->value;
+        $this->form->coa_from = $interCashBank->financialTransOut->glAnalysis()->where('position', PositionEnum::DEBET)->first()->coa_from;
+        $this->form->coa_to = $interCashBank->financialTransIn->glAnalysis()->where('position', PositionEnum::CREDIT)->first()->coa_from;
+        $this->form->value = $interCashBank->financialTransOut->glAnalysis()->where('position', PositionEnum::DEBET)->first()->value;
         $this->form->desc = null;
 
         $this->listing = $interCashBank->financialTransOut->glAnalysis->concat($interCashBank->financialTransIn->glAnalysis);
