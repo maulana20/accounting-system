@@ -28,11 +28,6 @@ class GlAnalysis extends Model
         return $query->where('position', $position);
     }
 
-    public function getPositionAttribute($value)
-    {
-        return PositionEnum::fromValue($value)->description;
-    }
-
     public function scopeJournal($query)
     {
         return $query->select('financial_trans_id', 'coa_from', 'position', 'financial_trans.created_at')
@@ -55,5 +50,13 @@ class GlAnalysis extends Model
                 $trans->where('period_begin', '201811');
             })
             ->orderBy('coas.code', 'ASC');
+    }
+
+    public function scopeTransInOut($query, $data)
+    {
+        return $query->whereIn('financial_trans_id', [
+                $data->financial_trans_out,
+                $data->financial_trans_in
+            ])->orderBy('financial_trans_id');
     }
 }

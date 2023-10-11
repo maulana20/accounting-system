@@ -69,8 +69,8 @@
                 <td>{{ ($data->financialTrans->vou != $vou) ? $data->financialTrans->vou : '' }}</td>
                 <td>{{ $data->coaFrom->code }} {{ $data->coaFrom->name }}</td>
                 <td>{{ $data->desc }}</td>
-                <td class="text-right">{{ ($data->position == "Debet") ? format_rp($data->value) : '' }}</td>
-                <td class="text-right">{{ ($data->position == "Credit") ? format_rp($data->value) : '' }}</td>
+                <td class="text-right">{{ ($data->position === $positionEnum::DEBET) ? format_rp($data->value) : '' }}</td>
+                <td class="text-right">{{ ($data->position === $positionEnum::CREDIT) ? format_rp($data->value) : '' }}</td>
             </tr>
             @php $vou = $data->financialTrans->vou; @endphp
             @endforeach

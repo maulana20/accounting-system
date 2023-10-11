@@ -50,8 +50,8 @@
                     @endif
                     <td>{{ $data->coaFrom->code }}</td>
                     <td>{{ $data->coaFrom->name }}</td>
-                    <td class="text-right">{{ $data->position === 'Debet' ? format_rp($data->value) : 0 }}</td>
-                    <td class="text-right">{{ $data->position === 'Credit' ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ $data->position === $positionEnum::DEBET ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ $data->position === $positionEnum::CREDIT ? format_rp($data->value) : 0 }}</td>
                 </tr>
                 @php $id = $data->financial_trans_id @endphp
                 @endforeach

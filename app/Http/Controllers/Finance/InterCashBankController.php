@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\InterCashBank;
 use App\Coa;
+use App\Enums\PositionEnum;
 use App\Services\InterCashBankFormService;
 
 class InterCashBankController extends Controller
@@ -22,7 +23,8 @@ class InterCashBankController extends Controller
         $form = $formService->form;
         $listing = $formService->listing;
         $coas = Coa::pluckCode();
+        $positionEnum = PositionEnum::class;
         
-        return view('finance.inter-cash-bank.show', compact('form', 'listing', 'coas'));
+        return view('finance.inter-cash-bank.show', compact('form', 'listing', 'coas', 'positionEnum'));
     }
 }

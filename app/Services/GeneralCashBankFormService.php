@@ -9,23 +9,27 @@ class GeneralCashBankFormService
     public $form;
     public $listing;
 
-    public function __construct($generalCashBank = null)
+    public function __construct($collection = null)
     {
-        if (is_null($generalCashBank)) {
-            $generalCashBank = request()->route()->parameter('generalCashBank');
-        }
+        if (is_null($collection)) $collection = request()->route()->parameter('generalCashBank');
 
-        $this->listing = $generalCashBank->financialTrans->glAnalysis()->position(
-            $generalCashBank->position === PositionEnum::DEBET ? PositionEnum::CREDIT : PositionEnum::DEBET
+        $this->listing = $collection->financialTrans->glAnalysis()->position(
+            $collection->position === PositionEnum::DEBET ? PositionEnum::CREDIT : PositionEnum::DEBET
         )->get();
+        $summary = $this->summary($collection);
 
         $this->form = new \StdClass;
-        $this->form->id = $generalCashBank->id;
-        $this->form->period = $generalCashBank->financialTrans->period_begin;
-        $this->form->status = $generalCashBank->financialTrans->period->status;
-        $this->form->created_at = $generalCashBank->created_at;
-        $this->form->position = $generalCashBank->position;
-        $this->form->coa_id = $this->listing->first()->coaTo->id;
-        $this->form->desc = null;
+        $this->form->id = $collection->id;
+        $this->form->period = $collection->financialTrans->period_begin;
+        $this->form->status = $collection->financialTrans->period->status;
+        $this->form->created_at = $collection->financialTrans->created_at;
+        $this->form->position = $collection->position;
+        $this->form->coa_id = $summary['coa_from'];
+        $this->form->desc = $summary['desc'];
+    }
+
+    public function summary($collection)
+    {
+        return $collection->financialTrans->glAnalysis()->position($collection->position)->first()->only('coa_from', 'desc');
     }
 }

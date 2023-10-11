@@ -72,8 +72,8 @@
                     @else
                         <td>&nbsp;</td>
                     @endif
-                    <td class="text-right">{{ $data->position === 'Credit' ? format_rp($data->value) : 0 }}</td>
-                    <td class="text-right">{{ $data->position === 'Debet' ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ $data->position === $positionEnum::CREDIT ? format_rp($data->value) : 0 }}</td>
+                    <td class="text-right">{{ $data->position === $positionEnum::DEBET ? format_rp($data->value) : 0 }}</td>
                     <td class="text-right">{{ format_rp($ending) }}</td>
                 </tr>
                 @php
