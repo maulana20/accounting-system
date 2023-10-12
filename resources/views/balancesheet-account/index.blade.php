@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        @include('accounting.balancesheet-account.partials.forms')
+        @include('balancesheet-account.partials.forms')
     </div>
 </div>
 @endsection

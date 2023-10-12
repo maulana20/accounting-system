@@ -14,7 +14,7 @@ class GeneralCashBankController extends Controller
     {
         $generalCashBank = GeneralCashBank::orderByTrans()->get();
         
-        return view('finance.general-cash-bank.index', compact('generalCashBank'));
+        return view('general-cash-bank.index', compact('generalCashBank'));
     }
     
     public function show(GeneralCashBank $generalCashBank, GeneralCashBankFormService $formService)
@@ -24,6 +24,6 @@ class GeneralCashBankController extends Controller
         $coas = Coa::pluckCode();
         $positionEnum = PositionEnum::class;
         
-        return view('finance.general-cash-bank.show', compact('form', 'listing', 'coas', 'positionEnum'));
+        return view('general-cash-bank.show', compact('form', 'listing', 'coas', 'positionEnum'));
     }
 }

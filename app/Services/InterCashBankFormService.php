@@ -12,7 +12,7 @@ class InterCashBankFormService
 
     public function __construct($collection = null)
     {
-        if (is_null($collection)) $collection = request()->route()->parameter('interCashBank');
+        if (is_null($collection)) $collection = request()->route()->parameter('inter_cash_bank');
 
         $this->listing = GlAnalysis::transInOut($collection)->get();
         $summary = $this->summary($collection);

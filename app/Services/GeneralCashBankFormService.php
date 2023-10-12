@@ -11,7 +11,7 @@ class GeneralCashBankFormService
 
     public function __construct($collection = null)
     {
-        if (is_null($collection)) $collection = request()->route()->parameter('generalCashBank');
+        if (is_null($collection)) $collection = request()->route()->parameter('general_cash_bank');
 
         $this->listing = $collection->financialTrans->glAnalysis()->position(
             $collection->position === PositionEnum::DEBET ? PositionEnum::CREDIT : PositionEnum::DEBET

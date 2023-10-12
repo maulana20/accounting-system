@@ -34,6 +34,10 @@ class GlAnalysis extends Model
             ->join('financial_trans', 'financial_trans.id', '=', 'gl_analyses.financial_trans_id')
             ->selectRaw('SUM(value) as value')
             ->groupBy('financial_trans_id', 'coa_from', 'position', 'financial_trans.created_at')
+            ->whereBetween('financial_trans.created_at', [
+                '2018-10-01 00:00:00',
+                '2018-12-31 23:59:59'
+            ])
             ->orderBy('financial_trans_id', 'DESC')
             ->orderBy('position', 'ASC');
     }
@@ -47,7 +51,10 @@ class GlAnalysis extends Model
                     ->where('postings.period_begin', '201810');
             })
             ->whereHas('financialTrans', function ($trans) {
-                $trans->where('period_begin', '201811');
+                $trans->whereBetween('financial_trans.created_at', [
+                    '2018-10-01 00:00:00',
+                    '2018-12-31 23:59:59'
+                ]);
             })
             ->orderBy('coas.code', 'ASC');
     }

@@ -14,7 +14,7 @@ class InterCashBankController extends Controller
     {
         $interCashBanks = InterCashBank::orderByTrans()->get();
         
-        return view('finance.inter-cash-bank.index', compact('interCashBanks'));
+        return view('inter-cash-bank.index', compact('interCashBanks'));
     }
     
     public function show(InterCashBank $interCashBank, InterCashBankFormService $formService)
@@ -24,6 +24,6 @@ class InterCashBankController extends Controller
         $coas = Coa::pluckCode();
         $positionEnum = PositionEnum::class;
         
-        return view('finance.inter-cash-bank.show', compact('form', 'listing', 'coas', 'positionEnum'));
+        return view('inter-cash-bank.show', compact('form', 'listing', 'coas', 'positionEnum'));
     }
 }

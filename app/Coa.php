@@ -34,7 +34,10 @@ class Coa extends Model
             })
             ->with(['glAnalysis' => function ($analysis) use ($position) {
                 $analysis->whereHas('financialTrans', function ($trans) {
-                    $trans->where('period_begin', '201811');
+                    $trans->whereBetween('financial_trans.created_at', [
+                        '2018-10-01 00:00:00',
+                        '2018-12-31 23:59:59'
+                    ]);
                 })
                 ->select('coa_to')
                 ->selectRaw('SUM(CASE WHEN position = ' . $position::DEBET . ' THEN value ELSE 0 END) AS debet')

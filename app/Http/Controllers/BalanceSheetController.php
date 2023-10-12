@@ -14,6 +14,6 @@ class BalanceSheetController extends Controller
         $passiva = GroupAccount::passiva()->get();
         $coaData = in_array($request->get('action'), ['edit']) && $request->has('id') ? Coa::find($request->get('id')) : null;
         
-        return view('accounting.balancesheet-account.index', compact('activa', 'passiva', 'coaData'));
+        return view('balancesheet-account.index', compact('activa', 'passiva', 'coaData'));
     }
 }
