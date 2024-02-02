@@ -23,9 +23,8 @@ class InterCashBank extends Model
 
     public function scopeOrderByTrans($query)
     {
-        $query->select('inter_cash_banks.*')
+        return $query->select('inter_cash_banks.*')
             ->join('financial_trans', 'financial_trans.id', '=', 'inter_cash_banks.financial_trans_in')
             ->orderBy('financial_trans.created_at', 'DESC');
-        return $query;
     }
 }

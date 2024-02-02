@@ -13,13 +13,12 @@ class GeneralCashBank extends Model
 
     public function scopeOrderByTrans($query)
     {
-        $query->select('general_cash_banks.*')
+        return $query->select('general_cash_banks.*')
             ->join('financial_trans', 'financial_trans.id', '=', 'general_cash_banks.financial_trans_id')
             ->whereBetween('financial_trans.created_at', [
                 '2018-10-01 00:00:00',
                 '2018-12-31 23:59:59'
             ])
             ->orderBy('financial_trans.created_at', 'DESC');
-        return $query;
     }
 }

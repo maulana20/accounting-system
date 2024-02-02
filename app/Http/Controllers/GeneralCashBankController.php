@@ -6,24 +6,22 @@ use Illuminate\Http\Request;
 use App\Coa;
 use App\GeneralCashBank;
 use App\Enums\PositionEnum;
-use App\Services\GeneralCashBankFormService;
 
 class GeneralCashBankController extends Controller
 {
     public function index(Request $request)
     {
         $generalCashBank = GeneralCashBank::orderByTrans()->get();
-        
         return view('general-cash-bank.index', compact('generalCashBank'));
     }
     
-    public function show(GeneralCashBank $generalCashBank, GeneralCashBankFormService $formService)
+    public function show(GeneralCashBank $generalCashBank)
     {
-        $form = $formService->form;
-        $listing = $formService->listing;
+        $analysis = $generalCashBank->financialTrans->glAnalysis()->position(
+            $generalCashBank->position === PositionEnum::DEBET ? PositionEnum::CREDIT : PositionEnum::DEBET
+        )->get();
         $coas = Coa::pluckCode();
         $positionEnum = PositionEnum::class;
-        
-        return view('general-cash-bank.show', compact('form', 'listing', 'coas', 'positionEnum'));
+        return view('general-cash-bank.show', compact('generalCashBank', 'analysis', 'coas', 'positionEnum'));
     }
 }

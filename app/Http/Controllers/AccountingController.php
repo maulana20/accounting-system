@@ -15,7 +15,6 @@ class AccountingController extends Controller
         $to_date = $request->get('to_date');
         $journal = GlAnalysis::journal()->get();
         $positionEnum = PositionEnum::class;
-        
         return view('journal', compact('journal', 'positionEnum', 'from_date', 'to_date'));
     }
 
@@ -26,7 +25,6 @@ class AccountingController extends Controller
         $coa_id = $request->get('coa_id');
         $generalLedgers = GlAnalysis::generalLedger()->get();
         $positionEnum = PositionEnum::class;
-        
         return view('general-ledger', compact('generalLedgers', 'positionEnum', 'from_date', 'to_date', 'coa_id'));
     }
 
@@ -35,7 +33,6 @@ class AccountingController extends Controller
         $from_date = $request->get('from_date');
         $to_date = $request->get('to_date');
         $trialBalances = Coa::trialBalance()->get();
-        
         return view('trial-balance', compact('trialBalances', 'from_date', 'to_date'));
     }
 }

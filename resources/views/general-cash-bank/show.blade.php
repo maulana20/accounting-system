@@ -5,16 +5,16 @@
 @section('content')
 
 <div class="pull-right">
-    {{ $form->period }} {{ $form->status }}
+    {{ $generalCashBank->financialTrans->period_begin }} {{ $generalCashBank->financialTrans->period->status }}
 </div>
 <h3 class="page-header">
     {{ trans('finance.general-cash-bank') }}
 </h3>
-{!! Form::model($form, ['route' => ['general-cash-bank.show', $form->id],'method' => 'patch']) !!}
+{!! Form::model($generalCashBank, ['route' => ['general-cash-bank.show', $generalCashBank->id],'method' => 'patch']) !!}
 <div class="row">
     <div class="col-md-3">
         {!! FormField::text('created_at', [
-            'value' => request('date', date('Y-m-d', strtotime($form->created_at))),
+            'value' => request('date', date('Y-m-d', strtotime($generalCashBank->financialTrans->created_at))),
             'label' => trans('app.date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
@@ -31,7 +31,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-    {!! FormField::select('coa_id', $coas, ['label' => __('accounting.coa-code'), 'required' => false]) !!}
+    {!! FormField::select('coa_to', $coas, ['label' => __('accounting.coa-code'), 'required' => false]) !!}
     </div>
 </div>
 <div class="row">
@@ -61,7 +61,7 @@
                 <th class="text-center">{!! link_to_route('general-cash-bank.index', trans('app.add')) !!}</th>
             </tr>
         </thead>
-        @foreach ($listing as $key => $data)
+        @foreach ($analysis as $key => $data)
         <tbody>
             <tr>
                 <td>{{ $key + 1 }}</td>

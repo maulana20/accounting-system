@@ -5,16 +5,16 @@
 @section('content')
 
 <div class="pull-right">
-    {{ $form->period }} {{ $form->status }}
+    {{ $interCashBank->financialTransOut->period_begin }} {{ $interCashBank->financialTransOut->period->status }}
 </div>
 <h3 class="page-header">
     {{ trans('finance.inter-cash-bank') }}
 </h3>
-{!! Form::model($form, ['route' => ['inter-cash-bank.show', $form->id],'method' => 'patch']) !!}
+{!! Form::model($interCashBank, ['route' => ['inter-cash-bank.show', $interCashBank->id],'method' => 'patch']) !!}
 <div class="row">
     <div class="col-md-3">
         {!! FormField::text('created_at', [
-            'value' => request('date', date('Y-m-d', strtotime($form->created_at))),
+            'value' => request('date', date('Y-m-d', strtotime($interCashBank->financialTransOut->created_at))),
             'label' => trans('app.date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
@@ -63,7 +63,7 @@
         </thead>
         <tbody>
 			@php $vou = null; $no = 0; @endphp
-            @foreach ($listing as $data)
+            @foreach ($analysis as $data)
             <tr>
                 <td>{{ ($data->financialTrans->vou != $vou) ? ++$no : '' }}</td>
                 <td>{{ ($data->financialTrans->vou != $vou) ? $data->financialTrans->vou : '' }}</td>

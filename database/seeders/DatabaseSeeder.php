@@ -15,7 +15,5 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(GroupAccountSeeder::class);
-        $this->call(CoaPostingSeeder::class);
-        $this->call(FinancialTransSeeder::class);
     }
 }

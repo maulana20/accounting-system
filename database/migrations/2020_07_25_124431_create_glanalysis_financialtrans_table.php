@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateGlanalysisFinancialtransTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('financial_trans', function (Blueprint $table) {
@@ -22,7 +17,6 @@ class CreateGlanalysisFinancialtransTable extends Migration
             $table->timestamps();
         });
         Schema::create('gl_analyses', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('financial_trans_id');
             $table->integer('coa_to');
             $table->integer('coa_from');
@@ -35,21 +29,22 @@ class CreateGlanalysisFinancialtransTable extends Migration
             $table->increments('id');
             $table->integer('financial_trans_id');
             $table->integer('position');
+            $table->integer('coa_to');
+            $table->string('desc', 255);
             $table->timestamps();
         });
         Schema::create('inter_cash_banks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('financial_trans_out');
             $table->integer('financial_trans_in');
+            $table->integer('coa_from');
+            $table->integer('coa_to');
+            $table->float('value', 10, 2);
+            $table->string('desc', 255);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('financial_trans');

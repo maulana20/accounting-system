@@ -6,16 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCoaPostingTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('group_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50);
+            $table->string('name', 255);
             $table->integer('type');
             $table->integer('parent')->nullable();
             $table->timestamps();
@@ -28,7 +23,7 @@ class CreateCoaPostingTable extends Migration
             $table->string('code', 6)->unique();
             $table->string('name', 50);
             $table->integer('lod');
-            $table->string('desc', 160);
+            $table->string('desc', 255);
             $table->string('vou', 6)->nullable()->unique();
             $table->timestamps();
         });
@@ -38,19 +33,13 @@ class CreateCoaPostingTable extends Migration
             $table->timestamps();
         });
         Schema::create('postings', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('coa_id');
             $table->string('period_begin', 6);
-            $table->float('balance', 10, 2); // max 1.000.000.000,00
+            $table->float('balance', 10, 2); // max 9.999.999.999,99
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('group_accounts');
