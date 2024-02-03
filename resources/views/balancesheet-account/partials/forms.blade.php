@@ -23,8 +23,8 @@
     {{ link_to_route('balancesheet-account.index', __('app.cancel'), [], ['class' => 'btn btn-default']) }}
     {!! Form::close() !!}
 @endif
-@if (Request::get('action') == 'edit' && $coaData)
-    {!! Form::model($coaData, ['route' => ['balancesheet-account.update', $coaData->id],'method' => 'patch']) !!}
+@if (Request::get('action') == 'edit' && $data)
+    {!! Form::model($item, ['route' => ['balancesheet-account.update', $item->id],'method' => 'patch']) !!}
     <div class="row">
         <div class="col-md-4">{!! FormField::text('code', ['label' => __('accounting.coa-code'), 'required' => true, 'disabled' => true]) !!}</div>
     </div>

@@ -4,6 +4,9 @@
 
 @section('content')
 
+@inject('coa', 'App\Coa')
+@php $positionEnum = App\Enums\positionEnum::class; @endphp
+
 <div class="pull-right">
     {{ $generalCashBank->financialTrans->period_begin }} {{ $generalCashBank->financialTrans->period->status }}
 </div>
@@ -31,7 +34,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-    {!! FormField::select('coa_to', $coas, ['label' => __('accounting.coa-code'), 'required' => false]) !!}
+    {!! FormField::select('coa_to', $coa::pluckCode(), ['label' => __('accounting.coa-code'), 'required' => false]) !!}
     </div>
 </div>
 <div class="row">

@@ -3,19 +3,22 @@
 @section('title', trans('accounting.general-ledger'))
 
 @section('content')
+
+@inject('coa', 'App\Coa')
+@php $positionEnum = App\Enums\PositionEnum::class; @endphp
+
 <div class="panel panel-default">
     <div class="panel-heading">
         {{ Form::open(['method' => 'get','class' => 'form-inline pull-right']) }}
-        @inject('coa', 'App\Coa')
-        {!! FormField::select('coa_id', $coa->pluck('name','id'), ['label' => __('accounting.coa-to')]) !!}
+        {!! FormField::select('coa_id', $coa::pluckCode(), ['label' => __('accounting.coa-to')]) !!}
         {!! FormField::text('from_date', [
-            'value' => request('date', $from_date),
+            'value' => request('date', null),
             'label' => trans('app.from-date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
         ]) !!}
         {!! FormField::text('to_date', [
-            'value' => request('date', $to_date),
+            'value' => request('date', null),
             'label' => trans('app.to-date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',

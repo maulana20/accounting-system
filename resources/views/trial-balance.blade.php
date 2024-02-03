@@ -7,13 +7,13 @@
     <div class="panel-heading">
         {{ Form::open(['method' => 'get','class' => 'form-inline pull-right']) }}
         {!! FormField::text('from_date', [
-            'value' => request('date', $from_date),
+            'value' => request('date', null),
             'label' => trans('app.from-date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
         ]) !!}
         {!! FormField::text('to_date', [
-            'value' => request('date', $to_date),
+            'value' => request('date', null),
             'label' => trans('app.to-date'),
             'class' => 'input-sm date-select',
             'placeholder' => 'yyyy-mm-dd',
