@@ -40,11 +40,11 @@ class Coa extends Model
                     ]);
                 })
                 ->select('coa_to')
-                ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS debet')
-                ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS credit')
+                ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
+                ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
                 ->selectRaw('
                     (SELECT balance FROM postings WHERE postings.coa_id=coa_to AND postings.period_begin=' . $period . ')
-                    + SUM(CASE WHEN gl_analyses.position = ' . PositionEnum::CREDIT . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END) AS ending')
+                    + SUM(CASE WHEN gl_analyses.position = ' . PositionEnum::DEBET . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END) AS ending')
                 ->groupBy('coa_to');
             }])->orderBy('code', 'ASC');
     }

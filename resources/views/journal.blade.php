@@ -51,8 +51,8 @@
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     @endif
-                    <td>{{ $data->coaFrom->code }}</td>
-                    <td>{{ $data->coaFrom->name }}</td>
+                    <td>{{ $data->coaTo->code }}</td>
+                    <td>{{ $data->coaTo->name }}</td>
                     <td class="text-right">{{ $data->position === $positionEnum::DEBET ? format_rp($data->value) : 0 }}</td>
                     <td class="text-right">{{ $data->position === $positionEnum::CREDIT ? format_rp($data->value) : 0 }}</td>
                 </tr>

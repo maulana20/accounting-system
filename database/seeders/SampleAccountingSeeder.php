@@ -150,20 +150,20 @@ class SampleAccountingSeeder extends Seeder
     private function insertGlAnalysis() : void
     {
         GlAnalysis::insert([
-            ['financial_trans_id' => 1, 'coa_to' => 1, 'coa_from' => 2, 'desc' => 'penambahan kas', 'position' => 2, 'value' => 100000, 'created_at' => '2018-10-30 05:56:04'],
-            ['financial_trans_id' => 1, 'coa_to' => 2, 'coa_from' => 1, 'desc' => 'penambahan kas', 'position' => 1, 'value' => 100000, 'created_at' => '2018-10-30 05:56:04'],
-            ['financial_trans_id' => 2, 'coa_to' => 1, 'coa_from' => 3, 'desc' => 'Perjalanan Maidah ke pulau Pari', 'position' => 1, 'value' => 10000, 'created_at' => '2018-11-01 03:00:00'],
-            ['financial_trans_id' => 2, 'coa_to' => 1, 'coa_from' => 4, 'desc' => 'Sewa Lapangan OR bulu tangkis dan Fitness', 'position' => 1, 'value' => 8000, 'created_at' => '2018-11-01 03:00:00'],
-            ['financial_trans_id' => 2, 'coa_to' => 3, 'coa_from' => 1, 'desc' => 'uang saku, OR', 'position' => 2, 'value' => 10000, 'created_at' => '2018-11-01 03:00:00'],
-            ['financial_trans_id' => 2, 'coa_to' => 4, 'coa_from' => 1, 'desc' => 'uang saku, OR', 'position' => 2, 'value' => 8000, 'created_at' => '2018-11-01 03:00:00'],
-            ['financial_trans_id' => 3, 'coa_to' => 5, 'coa_from' => 2, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 2, 'value' => 200000, 'created_at' => '2018-11-01 04:00:00'],
-            ['financial_trans_id' => 3, 'coa_to' => 2, 'coa_from' => 5, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 1, 'value' => 200000, 'created_at' => '2018-11-01 04:00:00'],
-            ['financial_trans_id' => 4, 'coa_to' => 5, 'coa_from' => 2, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 2, 'value' => 100000, 'created_at' => '2018-11-14 20:12:42'],
-            ['financial_trans_id' => 4, 'coa_to' => 2, 'coa_from' => 5, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 1, 'value' => 100000, 'created_at' => '2018-11-14 20:12:42'],
-            ['financial_trans_id' => 6, 'coa_to' => 10, 'coa_from' => 12, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 1, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
-            ['financial_trans_id' => 6, 'coa_to' => 12, 'coa_from' => 10, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 2, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
-            ['financial_trans_id' => 5, 'coa_to' => 1, 'coa_from' => 10, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 1, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
-            ['financial_trans_id' => 5, 'coa_to' => 10, 'coa_from' => 1, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 2, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
+            ['financial_trans_id' => 1, 'coa_to' => 1, 'coa_from' => 2, 'desc' => 'penambahan kas', 'position' => 1, 'value' => 100000, 'created_at' => '2018-10-30 05:56:04'],
+            ['financial_trans_id' => 1, 'coa_to' => 2, 'coa_from' => 1, 'desc' => 'penambahan kas', 'position' => 2, 'value' => 100000, 'created_at' => '2018-10-30 05:56:04'],
+            ['financial_trans_id' => 2, 'coa_to' => 1, 'coa_from' => 3, 'desc' => 'Perjalanan Maidah ke pulau Pari', 'position' => 2, 'value' => 10000, 'created_at' => '2018-11-01 03:00:00'],
+            ['financial_trans_id' => 2, 'coa_to' => 1, 'coa_from' => 4, 'desc' => 'Sewa Lapangan OR bulu tangkis dan Fitness', 'position' => 2, 'value' => 8000, 'created_at' => '2018-11-01 03:00:00'],
+            ['financial_trans_id' => 2, 'coa_to' => 3, 'coa_from' => 1, 'desc' => 'uang saku, OR', 'position' => 1, 'value' => 10000, 'created_at' => '2018-11-01 03:00:00'],
+            ['financial_trans_id' => 2, 'coa_to' => 4, 'coa_from' => 1, 'desc' => 'uang saku, OR', 'position' => 1, 'value' => 8000, 'created_at' => '2018-11-01 03:00:00'],
+            ['financial_trans_id' => 3, 'coa_to' => 5, 'coa_from' => 2, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 1, 'value' => 200000, 'created_at' => '2018-11-01 04:00:00'],
+            ['financial_trans_id' => 3, 'coa_to' => 2, 'coa_from' => 5, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 2, 'value' => 200000, 'created_at' => '2018-11-01 04:00:00'],
+            ['financial_trans_id' => 4, 'coa_to' => 5, 'coa_from' => 2, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 1, 'value' => 100000, 'created_at' => '2018-11-14 20:12:42'],
+            ['financial_trans_id' => 4, 'coa_to' => 2, 'coa_from' => 5, 'desc' => 'DEPOSIT SRIWIJAYA DARI 079', 'position' => 2, 'value' => 100000, 'created_at' => '2018-11-14 20:12:42'],
+            ['financial_trans_id' => 6, 'coa_to' => 10, 'coa_from' => 12, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 2, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
+            ['financial_trans_id' => 6, 'coa_to' => 12, 'coa_from' => 10, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 1, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
+            ['financial_trans_id' => 5, 'coa_to' => 1, 'coa_from' => 10, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 2, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
+            ['financial_trans_id' => 5, 'coa_to' => 10, 'coa_from' => 1, 'desc' => 'PB DARI KAS KE MAY BANK 160', 'position' => 1, 'value' => 200000, 'created_at' => '2018-11-15 03:57:49'],
         ]);
     }
 

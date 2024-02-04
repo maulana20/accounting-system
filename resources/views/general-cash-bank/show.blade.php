@@ -71,7 +71,7 @@
                 <td>{{ $data->coaFrom->code }} {{ $data->coaFrom->name }}</td>
                 <td>{{ $data->desc }}</td>
                 <td class="text-right">{{ format_rp($data->value) }}</td>
-                <td>{{ $positionEnum::fromValue($data->position)->description }}</td>
+                <td>{{ $positionEnum::fromValue($data->position === $positionEnum::DEBET ? $positionEnum::CREDIT : $positionEnum::DEBET)->description }}</td>
                 <td class="text-center">
                     {!! link_to_route('general-cash-bank.index', trans('app.edit')) !!} |
                     {!! link_to_route('general-cash-bank.index', trans('app.delete')) !!}

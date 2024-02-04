@@ -30,10 +30,10 @@ class GlAnalysis extends Model
 
     public function scopeJournal($query, $filter)
     {
-        return $query->select('financial_trans_id', 'coa_from', 'position', 'financial_trans.created_at')
+        return $query->select('financial_trans_id', 'coa_to', 'position', 'financial_trans.created_at')
             ->join('financial_trans', 'financial_trans.id', '=', 'gl_analyses.financial_trans_id')
             ->selectRaw('SUM(value) as value')
-            ->groupBy('financial_trans_id', 'coa_from', 'position', 'financial_trans.created_at')
+            ->groupBy('financial_trans_id', 'coa_to', 'position', 'financial_trans.created_at')
             ->whereBetween('financial_trans.created_at', [
                 $filter['from_date'],
                 $filter['to_date']
@@ -68,7 +68,7 @@ class GlAnalysis extends Model
             (SELECT @coa_id := gl_analyses.coa_to),
 
             balance + (
-                SELECT @ending := @ending + (CASE WHEN gl_analyses.position = ' . PositionEnum::CREDIT . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END)
+                SELECT @ending := @ending + (CASE WHEN gl_analyses.position = ' . PositionEnum::DEBET . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END)
                 FROM (SELECT @ending := 0, @coa_id := 0)
             i) as ending');
     }
@@ -78,6 +78,6 @@ class GlAnalysis extends Model
         return $query->whereIn('financial_trans_id', [
                 $data->financial_trans_out,
                 $data->financial_trans_in
-            ])->orderBy('financial_trans_id');
+            ])->orderBy('financial_trans_id', 'ASC');
     }
 }
