@@ -53,10 +53,6 @@
                 @endphp
                 @foreach ($generalLedgers as $data)
                 <tr>
-                    @php
-                        if ($coaTo != $data->coa_to) $ending = 0;
-                        $ending += ($coaTo != $data->coa_to ? $data->begining : 0) + ($data->position === $positionEnum::CREDIT ? $data->value : $data->value * -1);
-                    @endphp
                     @if ($id != $data->financial_trans_id)
                         <td>{{ $data->created_at }}</td>
                     @else
@@ -77,7 +73,7 @@
                     @endif
                     <td class="text-right">{{ $data->position === $positionEnum::CREDIT ? format_rp($data->value) : 0 }}</td>
                     <td class="text-right">{{ $data->position === $positionEnum::DEBET ? format_rp($data->value) : 0 }}</td>
-                    <td class="text-right">{{ format_rp($ending) }}</td>
+                    <td class="text-right">{{ format_rp($data->ending) }}</td>
                 </tr>
                 @php
                     $id = $data->financial_trans_id;
