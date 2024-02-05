@@ -50,7 +50,7 @@ trait JournalTrait
             @begining as begining,
             @begining + (
                 SELECT @ending := @ending + (CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END)
-                FROM (SELECT @coa_id := 0, @begining := 0, @ending := 0)
+                FROM (SELECT @coa_id := 0, @begining := 0.0, @ending := 0.0)
             i) as ending');
     }
 
@@ -58,7 +58,9 @@ trait JournalTrait
     {
         return $query->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
             ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
-            ->selectRaw('balance as begining,
-                balance + SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END) AS ending');
+            ->selectRaw('
+                balance as begining,
+                (CASE WHEN balance IS NOT NULL THEN balance ELSE 0.0 END)
+                + SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END) AS ending');
     }
 }
