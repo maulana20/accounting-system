@@ -18,7 +18,7 @@ trait BalanceTrait
                 $analysis->generalLedger($filter)
                     ->select('coa_to')
                     ->countBalance()
-                    ->groupBy('coa_to', 'balance');
+                    ->groupBy('coa_to');
             }])->orderBy('code', 'ASC');
     }
 }

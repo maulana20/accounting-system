@@ -31,6 +31,12 @@
         </h3>
     </div>
     <div class="panel-body">
+        @php $dataMissPosting = current(array_filter($generalLedgers->toArray(), fn ($data) => is_null($data['begining']))); @endphp
+        @if ($dataMissPosting)
+            <div class="text-right">
+                <button type="button" class="btn btn-sm btn-primary">refresh</button>
+            </div>
+        @endif
         <table class="table table-condensed">
             <thead>
                 <tr>
