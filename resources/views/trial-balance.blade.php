@@ -47,11 +47,11 @@
                         <td>&nbsp;</td>
                     @endif
                     <td>{{ $data->code }} {{ $data->name }}</td>
-                    <td class="text-right">{{ format_rp($data->begining) }}</td>
                     @php $analysis = $data->glAnalysis->first(); @endphp
+                    <td class="text-right">{{ format_rp($analysis ? $analysis->begining : 0) }}</td>
                     <td class="text-right">{{ format_rp($analysis ? $analysis->debet : 0) }}</td>
                     <td class="text-right">{{ format_rp($analysis ? $analysis->credit : 0) }}</td>
-                    <td class="text-right">{{ format_rp($analysis ? $analysis->ending : $data->begining) }}</td>
+                    <td class="text-right">{{ format_rp($analysis ? $analysis->ending : 0) }}</td>
                 </tr>
                 @php $id = $data->groupAccount->id @endphp
                 @endforeach

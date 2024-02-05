@@ -44,9 +44,9 @@ class GlAnalysis extends Model
 
     public function scopeGeneralLedger($query, $filter)
     {
-        return $query->select('gl_analyses.*', 'balance as begining')
+        return $query->select('gl_analyses.*')
             ->join('coas', 'coas.id', '=', 'gl_analyses.coa_to')
-            ->join('postings', function (JoinClause $join) use ($filter) {
+            ->leftJoin('postings', function (JoinClause $join) use ($filter) {
                 $period = \Carbon\Carbon::parse($filter['from_date'])->format('Ym');
                 $join->on('gl_analyses.coa_to', 'postings.coa_id')
                     ->where('postings.period_begin', $period);
@@ -64,13 +64,22 @@ class GlAnalysis extends Model
     public function scopeSumBalance($query)
     {
         return $query->selectRaw('
-            (SELECT @ending := (CASE WHEN @coa_id = gl_analyses.coa_to THEN @ending ELSE 0 END)),
-            (SELECT @coa_id := gl_analyses.coa_to),
+            (SELECT @begining := (CASE WHEN balance IS NOT NULL THEN balance ELSE 0.0 END)),
+            (SELECT @ending   := (CASE WHEN @coa_id = gl_analyses.coa_to THEN @ending ELSE 0.0 END)),
+            (SELECT @coa_id   := gl_analyses.coa_to),
 
-            balance + (
+            @begining as begining,
+            @begining + (
                 SELECT @ending := @ending + (CASE WHEN gl_analyses.position = ' . PositionEnum::DEBET . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END)
-                FROM (SELECT @ending := 0, @coa_id := 0)
+                FROM (SELECT @coa_id := 0, @begining := 0, @ending := 0)
             i) as ending');
+    }
+
+    public function scopeCountBalance($query)
+    {
+        return $query->selectRaw('
+            balance as begining,
+            balance + SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END) AS ending');
     }
 
     public function scopeTransInOut($query, $data)

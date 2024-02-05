@@ -25,27 +25,19 @@ class Coa extends Model
 
     public function scopeTrialBalance($query, $filter)
     {
-        return $query->select('coas.*', 'balance as begining')
-            ->join('postings', function (JoinClause $join) use ($filter) {
+        return $query->select('coas.*')
+            ->leftJoin('postings', function (JoinClause $join) use ($filter) {
                 $period = \Carbon\Carbon::parse($filter['from_date'])->format('Ym');
                 $join->on('coas.id', 'postings.coa_id')
                     ->where('postings.period_begin', $period);
             })
             ->with(['glAnalysis' => function ($analysis) use ($filter) {
-                $period = \Carbon\Carbon::parse($filter['from_date'])->format('Ym');
-                $analysis->whereHas('financialTrans', function ($trans) use ($filter) {
-                    $trans->whereBetween('financial_trans.created_at', [
-                        $filter['from_date'],
-                        $filter['to_date']
-                    ]);
-                })
-                ->select('coa_to')
-                ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
-                ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
-                ->selectRaw('
-                    (SELECT balance FROM postings WHERE postings.coa_id=coa_to AND postings.period_begin=' . $period . ')
-                    + SUM(CASE WHEN gl_analyses.position = ' . PositionEnum::DEBET . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END) AS ending')
-                ->groupBy('coa_to');
+                $analysis->generalLedger($filter)
+                    ->select('coa_to')
+                    ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
+                    ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
+                    ->countBalance()
+                    ->groupBy('coa_to', 'balance');
             }])->orderBy('code', 'ASC');
     }
 }
