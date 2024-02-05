@@ -65,21 +65,22 @@ class GlAnalysis extends Model
     {
         return $query->selectRaw('
             (SELECT @begining := (CASE WHEN balance IS NOT NULL THEN balance ELSE 0.0 END)),
-            (SELECT @ending   := (CASE WHEN @coa_id = gl_analyses.coa_to THEN @ending ELSE 0.0 END)),
-            (SELECT @coa_id   := gl_analyses.coa_to),
+            (SELECT @ending   := (CASE WHEN @coa_id = coa_to THEN @ending ELSE 0.0 END)),
+            (SELECT @coa_id   := coa_to),
 
             @begining as begining,
             @begining + (
-                SELECT @ending := @ending + (CASE WHEN gl_analyses.position = ' . PositionEnum::DEBET . ' THEN gl_analyses.value ELSE gl_analyses.value * -1 END)
+                SELECT @ending := @ending + (CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END)
                 FROM (SELECT @coa_id := 0, @begining := 0, @ending := 0)
             i) as ending');
     }
 
     public function scopeCountBalance($query)
     {
-        return $query->selectRaw('
-            balance as begining,
-            balance + SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END) AS ending');
+        return $query->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
+            ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
+            ->selectRaw('balance as begining,
+                balance + SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END) AS ending');
     }
 
     public function scopeTransInOut($query, $data)

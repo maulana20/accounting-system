@@ -34,8 +34,6 @@ class Coa extends Model
             ->with(['glAnalysis' => function ($analysis) use ($filter) {
                 $analysis->generalLedger($filter)
                     ->select('coa_to')
-                    ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
-                    ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
                     ->countBalance()
                     ->groupBy('coa_to', 'balance');
             }])->orderBy('code', 'ASC');
