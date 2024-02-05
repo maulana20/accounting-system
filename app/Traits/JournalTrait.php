@@ -43,15 +43,12 @@ trait JournalTrait
     public function scopeSumBalance($query)
     {
         return $query->selectRaw('
-            (SELECT @begining := (CASE WHEN balance IS NOT NULL THEN balance ELSE 0.0 END)),
-            (SELECT @ending   := (CASE WHEN @coa_id = coa_to THEN @ending ELSE 0.0 END)),
+            (SELECT @begining := (CASE WHEN balance IS NOT NULL THEN balance ELSE 0 END)),
+            (SELECT @ending   := (CASE WHEN @coa_id = coa_to THEN @ending ELSE 0 END)),
             (SELECT @coa_id   := coa_to),
 
-            @begining as begining,
-            @begining + (
-                SELECT @ending := @ending + (CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END)
-                FROM (SELECT @coa_id := 0, @begining := 0.0, @ending := 0.0)
-            i) as ending');
+            balance as begining,
+            @begining + (SELECT @ending := @ending + (CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END)) as ending');
     }
 
     public function scopeCountBalance($query)
