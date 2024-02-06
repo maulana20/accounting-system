@@ -9,13 +9,15 @@ trait JournalTrait
 {
     public function scopeJournal($query, $filter)
     {
+        $periodStart = \Carbon\Carbon::parse($filter['period_start'])->format('Y-m') . "-01";
+        $periodEnd   = \Carbon\Carbon::parse($filter['period_end'])->format('Y-m') . "-" .\Carbon\Carbon::parse($filter['period_end'])->endOfMonth()->format('d');
         return $query->select('financial_trans_id', 'coa_to', 'position', 'financial_trans.created_at')
             ->join('financial_trans', 'financial_trans.id', '=', 'gl_analyses.financial_trans_id')
             ->selectRaw('SUM(value) as value')
             ->groupBy('financial_trans_id', 'coa_to', 'position', 'financial_trans.created_at')
             ->whereBetween('financial_trans.created_at', [
-                $filter['from_date'],
-                $filter['to_date']
+                "{$periodStart} 00:00:00",
+                "{$periodEnd} 23:59:59"
             ])
             ->orderBy('financial_trans_id', 'DESC')
             ->orderBy('position', 'ASC');
@@ -26,14 +28,16 @@ trait JournalTrait
         return $query->select('gl_analyses.*')
             ->join('coas', 'coas.id', '=', 'gl_analyses.coa_to')
             ->leftJoin('postings', function (JoinClause $join) use ($filter) {
-                $period = \Carbon\Carbon::parse($filter['from_date'])->subMonth()->format('Ym');
+                $period = \Carbon\Carbon::parse($filter['period_start'])->subMonth()->format('Ym');
                 $join->on('gl_analyses.coa_to', 'postings.coa_id')
                     ->where('postings.period_begin', $period);
             })
             ->whereHas('financialTrans', function ($trans) use ($filter) {
+                $periodStart = \Carbon\Carbon::parse($filter['period_start'])->format('Y-m') . "-01";
+                $periodEnd   = \Carbon\Carbon::parse($filter['period_end'])->format('Y-m') . "-" .\Carbon\Carbon::parse($filter['period_end'])->endOfMonth()->format('d');
                 $trans->whereBetween('financial_trans.created_at', [
-                    $filter['from_date'] . " 00:00:00",
-                    $filter['to_date'] . " 23:59:59"
+                    "{$periodStart} 00:00:00",
+                    "{$periodEnd} 23:59:59"
                 ]);
             })
             ->when($filter['coa_id'] ?? null, fn ($query, $coaId) => $query->where('coa_to', $coaId))

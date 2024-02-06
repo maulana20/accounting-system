@@ -31,7 +31,10 @@
         </h3>
     </div>
     <div class="panel-body">
-        @php $dataMissPosting = current(array_filter($generalLedgers->toArray(), fn ($data) => is_null($data['begining']))); @endphp
+        @php $dataMissPosting = current(array_filter(
+            is_a($generalLedgers, 'Illuminate\Pagination\LengthAwarePaginator') ? $generalLedgers->items() : $generalLedgers->toArray(),
+            fn ($data) => is_null($data['begining'])));
+        @endphp
         @if ($dataMissPosting)
             <div class="text-right">
                 <button type="button" class="btn btn-sm btn-primary">refresh</button>

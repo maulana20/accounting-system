@@ -35,9 +35,9 @@
                         {{ trans('accounting.accounting') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li>{{ link_to_route('journal.index', trans('accounting.journal'), 'from_date=2018-11-01&to_date=2018-12-31') }}</li>
-                        <li>{{ link_to_route('general-ledger.index', trans('accounting.general-ledger'), 'from_date=2018-11-01&to_date=2018-12-31') }}</li>
-                        <li>{{ link_to_route('trial-balance.index', trans('accounting.trial-balance'), 'from_date=2018-11-01&to_date=2018-12-31') }}</li>
+                        <li>{{ link_to_route('journal.index', trans('accounting.journal'), 'period_start=2018-11&period_end=2018-12') }}</li>
+                        <li>{{ link_to_route('general-ledger.index', trans('accounting.general-ledger'), 'period_start=2018-11&period_end=2018-12') }}</li>
+                        <li>{{ link_to_route('trial-balance.index', trans('accounting.trial-balance'), 'period_start=2018-11&period_end=2018-12') }}</li>
                         <li role="separator" class="divider"></li>
                         <li>{{ link_to_route('balancesheet-account.index', trans('accounting.balancesheet-account')) }}</li>
                     </ul>
