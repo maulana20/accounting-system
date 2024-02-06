@@ -26,7 +26,7 @@ trait JournalTrait
         return $query->select('gl_analyses.*')
             ->join('coas', 'coas.id', '=', 'gl_analyses.coa_to')
             ->leftJoin('postings', function (JoinClause $join) use ($filter) {
-                $period = \Carbon\Carbon::parse($filter['from_date'])->format('Ym');
+                $period = \Carbon\Carbon::parse($filter['from_date'])->subMonth()->format('Ym');
                 $join->on('gl_analyses.coa_to', 'postings.coa_id')
                     ->where('postings.period_begin', $period);
             })
@@ -42,26 +42,23 @@ trait JournalTrait
 
     public function scopeSumBalance($query)
     {
-        $period = \Carbon\Carbon::parse(request()->to_date)->format('Ym');
         return $query->selectRaw('
-            (SELECT @balance  := (CASE WHEN period_begin = ' . $period . ' THEN 0 ELSE balance END)),
-            (SELECT @begining := (CASE WHEN balance IS NOT NULL THEN @balance ELSE 0 END)),
+            (SELECT @begining := (CASE WHEN balance IS NOT NULL THEN balance ELSE 0 END)),
             (SELECT @ending   := (CASE WHEN @coa_id = coa_to THEN @ending ELSE 0 END)),
             (SELECT @coa_id   := coa_to),
 
-            @balance as begining,
+            balance as begining,
             @begining + (SELECT @ending := @ending + (CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END)) as ending');
     }
 
     public function scopeCountBalance($query)
     {
-        $period = \Carbon\Carbon::parse(request()->to_date)->format('Ym');
         return $query->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE 0 END) AS debet')
             ->selectRaw('SUM(CASE WHEN position = ' . PositionEnum::CREDIT . ' THEN value ELSE 0 END) AS credit')
             ->selectRaw('
-                (CASE WHEN period_begin = ' . $period . ' THEN 0 ELSE balance END) as begining,
-                (CASE WHEN balance IS NOT NULL THEN(CASE WHEN period_begin = ' . $period . ' THEN 0 ELSE balance END) ELSE 0 END)
+                balance as begining,
+                (CASE WHEN balance IS NOT NULL THEN balance ELSE 0 END)
                 + SUM(CASE WHEN position = ' . PositionEnum::DEBET . ' THEN value ELSE value * -1 END) AS ending')
-            ->groupBy('period_begin', 'balance');
+            ->groupBy('balance');
     }
 }
